@@ -1,0 +1,13 @@
+.page { padding: 24rpx; padding-bottom: 36rpx; }
+.block { padding: 24rpx; margin-bottom: 16rpx; }
+.k { color: #8d716a; font-size: 22rpx; margin-top: 10rpx; }
+.v { font-size: 30rpx; margin-top: 6rpx; margin-bottom: 10rpx; }
+.line { display: flex; justify-content: space-between; font-size: 25rpx; margin-bottom: 10rpx; color: #59413c; }
+.total { color: #ae3115; font-weight: 700; margin-top: 8rpx; }
+.qr { margin-top: 10rpx; background: #fff0ed; border-radius: 14rpx; padding: 28rpx; text-align: center; color: #8d716a; }
+.upload { margin-top: 10rpx; background: #ffe9e5; border-radius: 14rpx; padding: 20rpx; color: #59413c; }
+.remark { margin-top: 10rpx; background: #fff0ed; border-radius: 14rpx; min-height: 140rpx; padding: 16rpx; width: 100%; box-sizing: border-box; }
+.submit {
+  background: #ff6b4a; color: #fff; text-align: center; border-radius: 20rpx;
+  padding: 24rpx; font-size: 30rpx; font-weight: 700;
+}

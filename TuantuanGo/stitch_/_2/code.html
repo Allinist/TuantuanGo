@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html class="light" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>发起团购 | ACG Marketplace</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "on-background": "#261815",
+                "surface-container-high": "#fce3dd",
+                "primary-fixed-dim": "#ffb4a3",
+                "tertiary-fixed": "#76f6f4",
+                "on-secondary-fixed": "#002019",
+                "inverse-surface": "#3c2d29",
+                "surface-variant": "#f6ddd8",
+                "surface": "#fff8f6",
+                "secondary": "#006b59",
+                "on-surface": "#261815",
+                "outline-variant": "#e1bfb8",
+                "on-secondary-container": "#00705d",
+                "secondary-fixed": "#89f6da",
+                "on-tertiary-container": "#003939",
+                "inverse-primary": "#ffb4a3",
+                "on-secondary": "#ffffff",
+                "on-primary": "#ffffff",
+                "on-error-container": "#93000a",
+                "surface-container-lowest": "#ffffff",
+                "on-primary-container": "#661000",
+                "on-tertiary-fixed": "#002020",
+                "inverse-on-surface": "#ffede9",
+                "surface-container-low": "#fff0ed",
+                "surface-tint": "#ae3115",
+                "error": "#ba1a1a",
+                "secondary-fixed-dim": "#6cd9be",
+                "on-tertiary-fixed-variant": "#00504f",
+                "on-primary-fixed-variant": "#8c1900",
+                "outline": "#8d716a",
+                "surface-container": "#ffe9e5",
+                "surface-bright": "#fff8f6",
+                "on-secondary-fixed-variant": "#005142",
+                "secondary-container": "#86f3d7",
+                "primary-container": "#ff6b4a",
+                "surface-container-highest": "#f6ddd8",
+                "on-surface-variant": "#59413c",
+                "tertiary-fixed-dim": "#56d9d8",
+                "on-primary-fixed": "#3d0600",
+                "on-tertiary": "#ffffff",
+                "error-container": "#ffdad6",
+                "primary-fixed": "#ffdad2",
+                "tertiary-container": "#00acab",
+                "surface-dim": "#edd5cf",
+                "on-error": "#ffffff",
+                "tertiary": "#006a69",
+                "primary": "#ae3115",
+                "background": "#fff8f6"
+              },
+              "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+              },
+              "spacing": {
+                "unit": "4px",
+                "stack-lg": "24px",
+                "stack-xs": "4px",
+                "element-gap": "12px",
+                "section-margin": "24px",
+                "stack-sm": "8px",
+                "stack-md": "16px",
+                "container-padding": "16px"
+              },
+              "fontFamily": {
+                "label-bold": ["Be Vietnam Pro"],
+                "price-display": ["Be Vietnam Pro"],
+                "headline-md": ["Be Vietnam Pro"],
+                "display-lg": ["Be Vietnam Pro"],
+                "body-sm": ["Be Vietnam Pro"],
+                "body-reg": ["Be Vietnam Pro"]
+              },
+              "fontSize": {
+                "label-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                "price-display": ["24px", {"lineHeight": "24px", "fontWeight": "700"}],
+                "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                "display-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "body-reg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background dark:bg-inverse-surface text-on-surface dark:text-inverse-on-surface pb-40 transition-colors duration-200">
+<!-- 顶部栏 -->
+<header class="bg-surface/80 dark:bg-on-surface-variant/20 backdrop-blur-md shadow-sm z-50 sticky top-0 flex justify-between items-center w-full px-container-padding py-stack-md max-w-7xl mx-auto">
+<div class="flex items-center gap-element-gap">
+<span class="material-symbols-outlined text-on-surface dark:text-inverse-on-surface cursor-pointer">arrow_back_ios</span>
+<h1 class="text-headline-md font-bold text-on-surface dark:text-inverse-on-surface">发布团购</h1>
+</div>
+<div class="flex items-center gap-element-gap">
+<button class="p-2 rounded-full hover:bg-surface-container dark:hover:bg-on-surface-variant/30 transition-colors" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-symbols-outlined text-on-surface-variant dark:text-surface-variant">contrast</span>
+</button>
+<span class="material-symbols-outlined text-on-surface-variant dark:text-surface-variant">help</span>
+</div>
+</header>
+<main class="max-w-3xl mx-auto px-container-padding py-section-margin">
+<!-- 商品展示 -->
+<section class="mb-section-margin">
+<div class="flex items-center justify-between mb-stack-md">
+<h2 class="text-headline-md font-bold">商品图片</h2>
+<span class="text-body-sm text-on-surface-variant">最多9张</span>
+</div>
+<div class="grid grid-cols-3 gap-3">
+<div class="aspect-square bg-surface-container-low dark:bg-surface-variant/10 rounded-xl flex flex-col items-center justify-center border-2 border-dashed border-outline-variant dark:border-outline/40 hover:border-primary transition-all cursor-pointer group">
+<span class="material-symbols-outlined text-on-surface-variant/60 dark:text-surface-variant/60 text-3xl mb-1 group-hover:scale-110 transition-transform">add_photo_alternate</span>
+<span class="text-[10px] font-bold text-on-surface-variant/60 uppercase">上传图片</span>
+</div>
+<div class="relative aspect-square rounded-xl overflow-hidden shadow-sm border border-outline-variant/20 group">
+<img class="w-full h-full object-cover" data-alt="Product view 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDrYcVSp0RZg6DA2HWwR78N1afaaUCYEkLGiCDs2d0JykqsRCr9E1lXr5UQ9AlYBfDr9yyI7h7hb_UieyPyiLdvYYCoZkTT7LeD7uR5102jCdOwG3B37umgAGAMIrKii-UcOeu9YMFFakJk2H9MF2V144PH__jDAQv6v8-9LgcdeBe3LJwdo_uZZT2XoA-bBHJRhEl-q3B3Kverq79bPGJdwqNss9demkUGlcebEQfrn8zRtkVI3HqcVzcQ6ue-Qul18atOyWLTik"/>
+<div class="absolute top-1 right-1 bg-black/40 backdrop-blur-sm text-white rounded-full p-1 cursor-pointer hover:bg-black/60">
+<span class="material-symbols-outlined text-sm">close</span>
+</div>
+</div>
+<div class="relative aspect-square rounded-xl overflow-hidden shadow-sm border border-outline-variant/20 group">
+<img class="w-full h-full object-cover" data-alt="Product view 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAl5eXrmKc2xZKrYikKT2Slg6Sa8rB5rIwLEqSVtLdpck4CTBH-rnAa2SI7sx7bl3Wf16mguz6f6p2o_MagBN1BNlCXcdESkUObYVZ3CY1xcfjzIRY2_36yGMOj8u9IFQuJp5Yg4Gwisj7CZRVMUZG-BigFcQFFUob-2y4bfRqCobMcIefz-rEiYpH_QPwZATs0O_pGKICf3QkJrTinUw2EUBeMypC_whB4Eaw2fYZ2N-CHQrRYhluK25Oh5EM9Z73wDjo1LJxVECk"/>
+<div class="absolute top-1 right-1 bg-black/40 backdrop-blur-sm text-white rounded-full p-1 cursor-pointer hover:bg-black/60">
+<span class="material-symbols-outlined text-sm">close</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 基本信息 -->
+<section class="bg-surface-container-lowest dark:bg-on-surface-variant/5 rounded-2xl p-6 shadow-sm border border-outline-variant/20 mb-section-margin">
+<div class="space-y-6">
+<div>
+<label class="block text-label-bold text-on-surface-variant dark:text-surface-variant mb-2">商品名称</label>
+<input class="w-full bg-surface dark:bg-inverse-surface/50 border-outline-variant/50 dark:border-outline/40 rounded-xl px-4 py-3 focus:ring-primary dark:focus:ring-primary-fixed-dim focus:border-primary text-body-reg placeholder:text-on-surface-variant/40" placeholder="例如：初音未来 15周年纪念版 1/7手办" type="text"/>
+</div>
+<div>
+<label class="block text-label-bold text-on-surface-variant dark:text-surface-variant mb-2">详细描述</label>
+<textarea class="w-full bg-surface dark:bg-inverse-surface/50 border-outline-variant/50 dark:border-outline/40 rounded-xl px-4 py-3 focus:ring-primary dark:focus:ring-primary-fixed-dim focus:border-primary text-body-reg placeholder:text-on-surface-variant/40" placeholder="请描述商品详情、来源渠道及预计发货时间..." rows="4"></textarea>
+</div>
+</div>
+</section>
+<!-- 售卖规则 -->
+<section class="mb-section-margin">
+<h2 class="text-headline-md font-bold mb-4">规则设置</h2>
+<div class="grid grid-cols-3 gap-3">
+<button class="bg-primary dark:bg-primary-container text-white dark:text-on-primary-container p-4 rounded-2xl flex flex-col items-center gap-2 shadow-sm transition-all border border-transparent">
+<span class="material-symbols-outlined">sell</span>
+<span class="text-label-bold">直接售卖</span>
+</button>
+<button class="bg-surface-container-lowest dark:bg-on-surface-variant/10 text-on-surface-variant dark:text-surface-variant p-4 rounded-2xl flex flex-col items-center gap-2 border border-outline-variant/30 hover:border-primary transition-colors">
+<span class="material-symbols-outlined">auto_awesome_motion</span>
+<span class="text-label-bold">捆绑销售</span>
+</button>
+<button class="bg-surface-container-lowest dark:bg-on-surface-variant/10 text-on-surface-variant dark:text-surface-variant p-4 rounded-2xl flex flex-col items-center gap-2 border border-outline-variant/30 hover:border-primary transition-colors">
+<span class="material-symbols-outlined">checklist</span>
+<span class="text-label-bold">自选搭配</span>
+</button>
+</div>
+</section>
+<!-- 团购设置 -->
+<section class="bg-surface-container-low dark:bg-on-surface-variant/10 rounded-2xl p-6 border border-primary/10 mb-section-margin">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-headline-md font-bold">团购配置</h2>
+<div class="flex bg-surface-variant/30 dark:bg-on-surface-variant/30 p-1 rounded-full">
+<button class="px-4 py-1.5 rounded-full text-label-bold text-on-surface-variant dark:text-surface-variant">个人</button>
+<button class="px-4 py-1.5 rounded-full text-label-bold bg-primary dark:bg-primary-container text-white dark:text-on-primary-container shadow-sm">多人拼团</button>
+</div>
+</div>
+<div class="bg-white dark:bg-inverse-surface/50 rounded-xl border border-outline-variant/30 dark:border-outline/30 overflow-hidden">
+<div class="px-4 py-3 border-b border-outline-variant/30">
+<label class="block text-label-bold text-on-surface-variant dark:text-surface-variant mb-1 uppercase tracking-wider">发车条件</label>
+<div class="flex items-center justify-between">
+<input class="w-full bg-transparent border-none focus:ring-0 p-0 text-headline-md font-bold placeholder:text-on-surface-variant/30" placeholder="输入成团数量或金额" type="number"/>
+<span class="text-primary font-bold whitespace-nowrap ml-2">件成团</span>
+</div>
+</div>
+<div class="p-3 bg-surface-container-lowest dark:bg-transparent flex items-start gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">info</span>
+<p class="text-body-sm text-on-surface-variant/80">达到此条件后，系统将自动发起扣款或通知付款。</p>
+</div>
+</div>
+</section>
+<!-- 费用与物流 -->
+<section class="bg-surface-container-lowest dark:bg-on-surface-variant/5 rounded-2xl p-6 shadow-sm border border-outline-variant/20 mb-section-margin">
+<h2 class="text-headline-md font-bold mb-6">费用设置</h2>
+<div class="grid grid-cols-2 gap-x-4 gap-y-6">
+<div class="relative group">
+<label class="block text-label-bold text-on-surface-variant dark:text-surface-variant mb-2">包装费</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/60 font-bold">¥</span>
+<input class="w-full bg-surface dark:bg-inverse-surface/50 border-outline-variant/50 dark:border-outline/40 rounded-xl pl-8 pr-4 py-3 focus:ring-primary text-body-reg font-bold" type="number" value="2.00"/>
+</div>
+</div>
+<div class="relative group">
+<label class="block text-label-bold text-on-surface-variant dark:text-surface-variant mb-2">物料费</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/60 font-bold">¥</span>
+<input class="w-full bg-surface dark:bg-inverse-surface/50 border-outline-variant/50 dark:border-outline/40 rounded-xl pl-8 pr-4 py-3 focus:ring-primary text-body-reg font-bold" type="number" value="1.50"/>
+</div>
+</div>
+<div class="relative group">
+<label class="block text-label-bold text-on-surface-variant dark:text-surface-variant mb-2">可选小费</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/60 font-bold">¥</span>
+<input class="w-full bg-surface dark:bg-inverse-surface/50 border-outline-variant/50 dark:border-outline/40 rounded-xl pl-8 pr-4 py-3 focus:ring-primary text-body-reg font-bold" placeholder="0.00" type="number"/>
+</div>
+</div>
+<div class="relative group">
+<label class="block text-label-bold text-on-surface-variant dark:text-surface-variant mb-2">包邮条件</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/60 font-bold">¥</span>
+<input class="w-full bg-surface dark:bg-inverse-surface/50 border-outline-variant/50 dark:border-outline/40 rounded-xl pl-8 pr-4 py-3 focus:ring-primary text-body-reg font-bold" placeholder="99.00" type="number"/>
+</div>
+</div>
+</div>
+</section>
+<!-- 收款设置 -->
+<section class="bg-surface-container-lowest dark:bg-on-surface-variant/5 rounded-2xl p-6 shadow-sm border border-outline-variant/20 mb-section-margin">
+<h2 class="text-headline-md font-bold mb-6">支付设置</h2>
+<div class="flex items-center gap-6">
+<div class="w-28 h-28 bg-surface-container-low dark:bg-inverse-surface/50 border-2 border-dashed border-outline-variant/50 dark:border-outline/40 rounded-2xl flex flex-col items-center justify-center cursor-pointer hover:border-primary transition-all group overflow-hidden">
+<span class="material-symbols-outlined text-primary mb-1 group-hover:scale-110 transition-transform">qr_code_2</span>
+<span class="text-[10px] font-bold text-on-surface-variant">上传二维码</span>
+</div>
+<div class="flex-1">
+<h4 class="text-label-bold text-on-surface mb-1">微信/支付宝收款码</h4>
+<p class="text-body-sm text-on-surface-variant leading-relaxed">用于买家直接支付确认。请确保收款码清晰有效，以免影响结算进度。</p>
+</div>
+</div>
+</section>
+</main>
+<!-- 底部导航 -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-white/90 dark:bg-inverse-surface/90 backdrop-blur-lg border-t border-outline-variant/20 px-6 pb-8 pt-3 flex justify-between items-center transition-all">
+<div class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">storefront</span>
+<span class="text-[10px] font-bold">市集</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="text-[10px] font-bold">购物车</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-primary cursor-pointer -translate-y-1">
+<div class="bg-primary text-white p-2 rounded-2xl shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+</div>
+<span class="text-[10px] font-bold">发布</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="text-[10px] font-bold">订单</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="text-[10px] font-bold">我的</span>
+</div>
+</nav>
+<!-- 发起团购按钮 (悬浮固定) -->
+<div class="fixed bottom-24 left-0 w-full px-container-padding pointer-events-none">
+<div class="max-w-3xl mx-auto flex justify-center pointer-events-auto">
+<button class="w-full max-w-sm bg-primary dark:bg-primary-container text-white dark:text-on-primary-container py-4 rounded-2xl font-bold flex items-center justify-center gap-3 shadow-xl shadow-primary/20 active:scale-[0.98] transition-all group">
+<span class="material-symbols-outlined group-hover:rotate-12 transition-transform">rocket_launch</span>
+<span class="text-lg">确认并发起团购</span>
+</button>
+</div>
+</div>
+<!-- 背景装饰 -->
+<div class="fixed top-0 right-0 -z-10 opacity-[0.03] dark:opacity-[0.05] pointer-events-none">
+<svg fill="none" height="600" viewbox="0 0 400 400" width="600" xmlns="http://www.w3.org/2000/svg">
+<circle cx="350" cy="50" fill="#ae3115" r="200"></circle>
+<circle cx="50" cy="350" fill="#006b59" r="150"></circle>
+</svg>
+</div>
+</body></html>

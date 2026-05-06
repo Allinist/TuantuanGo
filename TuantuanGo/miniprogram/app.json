@@ -1,0 +1,25 @@
+{
+  "pages": [
+    "pages/market/index",
+    "pages/group-detail/index",
+    "pages/product-select/index",
+    "pages/cart/index",
+    "pages/order-confirm/index",
+    "pages/orders/index",
+    "pages/settings/index",
+    "pages/publish/index",
+    "pages/leader-apply/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "TuantuanGo",
+    "navigationBarBackgroundColor": "#fff8f6",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#fff8f6",
+    "backgroundTextStyle": "light"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+    "bottom-nav": "/components/bottom-nav/index"
+  }
+}

@@ -1,0 +1,7 @@
+<view class="page">
+  <view class="card box">
+    <view class="title">当前未开通团长权限</view>
+    <view class="desc">根据文档，中间 + 入口需分流到团长身份申请。开通后可发布团购、上架商品、配置规则和收款二维码。</view>
+    <view class="btn" bindtap="applyNow">立即申请团长</view>
+  </view>
+</view>

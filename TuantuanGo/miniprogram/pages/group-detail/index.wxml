@@ -1,0 +1,27 @@
+<view class="safe-bottom page">
+  <view class="card head">
+    <view class="title">{{group.title}}</view>
+    <view class="desc">分类：{{group.category}} · 团长：{{group.leaderName}}</view>
+    <view class="line">
+      <text class="chip">{{group.groupType === 'multi' ? '多人拼团' : '单人团'}}</text>
+      <text class="chip state">{{group.status === 'active' ? '进行中' : '已发车'}}</text>
+    </view>
+  </view>
+
+  <view class="card block">
+    <view class="k">销售规则</view>
+    <view class="v">自选模式，满 ¥{{group.freeShippingThreshold}} 包邮，支持追加与合并发货。</view>
+    <view class="k">发车条件</view>
+    <view class="v">{{group.departureCondition}}</view>
+  </view>
+
+  <view class="card block">
+    <view class="k">收款二维码</view>
+    <view class="qr">{{group.paymentQrHint}}</view>
+  </view>
+
+  <view class="actions">
+    <view class="ghost" bindtap="goCart">查看购物车</view>
+    <view class="solid" bindtap="goSelect">选购商品</view>
+  </view>
+</view>

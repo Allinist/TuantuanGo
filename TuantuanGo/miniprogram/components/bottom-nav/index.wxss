@@ -1,0 +1,39 @@
+.nav-wrap {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 120rpx;
+  background: #ffffff;
+  border-top: 1rpx solid #f0d5cf;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 99;
+}
+
+.item {
+  width: 120rpx;
+  text-align: center;
+  color: #8d716a;
+  font-size: 22rpx;
+  font-weight: 500;
+}
+
+.item.on {
+  color: #ae3115;
+  font-weight: 700;
+}
+
+.publish {
+  margin-top: -44rpx;
+  width: 92rpx;
+  height: 92rpx;
+  border-radius: 46rpx;
+  background: #ff6b4a;
+  color: #ffffff;
+  font-size: 56rpx;
+  line-height: 86rpx;
+  text-align: center;
+  box-shadow: 0 8rpx 24rpx rgba(255, 107, 74, 0.28);
+}

@@ -1,0 +1,15 @@
+<view class="safe-bottom page">
+  <view class="section-title">{{group.title}}</view>
+  <view class="hint">规则：{{group.saleRuleType === 'optional' ? '自选' : '直出'}} · 同款编号展示</view>
+  <block wx:for="{{products}}" wx:key="id">
+    <view class="card item">
+      <view class="name">{{item.name}}</view>
+      <view class="meta">编号 {{item.unitCode}} · 库存 {{item.stock}}</view>
+      <view class="row">
+        <text class="price">¥{{item.price}}</text>
+        <view class="btn" data-product-id="{{item.id}}" bindtap="addToCart">加入购物车</view>
+      </view>
+    </view>
+  </block>
+  <view class="go" bindtap="goCart">去购物车</view>
+</view>

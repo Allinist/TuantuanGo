@@ -1,0 +1,28 @@
+<view class="safe-bottom page">
+  <view class="section-title">团：{{group ? group.title : '暂无'}}</view>
+  <view wx:if="{{!cart.items.length}}" class="card empty">还没有商品，先去团详情选购。</view>
+  <block wx:for="{{cart.items}}" wx:key="productId">
+    <view class="card item">
+      <view class="name">{{item.name}}</view>
+      <view class="rule">规则来源：{{item.ruleType}} · 编号：{{item.unitCode}}</view>
+      <view class="row">
+        <text>¥{{item.price}} x {{item.quantity}}</text>
+        <text>小计 ¥{{item.price * item.quantity}}</text>
+      </view>
+      <view class="qty">
+        <view class="op" data-product-id="{{item.productId}}" bindtap="minus">-</view>
+        <text>{{item.quantity}}</text>
+        <view class="op" data-product-id="{{item.productId}}" bindtap="plus">+</view>
+      </view>
+    </view>
+  </block>
+  <view wx:if="{{amount}}" class="card fee">
+    <view class="row"><text>商品金额</text><text>¥{{amount.productAmount}}</text></view>
+    <view class="row"><text>邮费</text><text>¥{{amount.shippingFee}}</text></view>
+    <view class="row"><text>打包费</text><text>¥{{amount.packingFee}}</text></view>
+    <view class="row"><text>物料费</text><text>¥{{amount.materialFee}}</text></view>
+    <view class="row total"><text>应付</text><text>¥{{amount.totalAmount}}</text></view>
+  </view>
+  <view class="submit" bindtap="submit">提交订单</view>
+</view>
+<bottom-nav active="cart" />

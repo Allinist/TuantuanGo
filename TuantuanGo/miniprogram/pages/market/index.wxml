@@ -1,0 +1,23 @@
+<view class="safe-bottom page">
+  <view class="search card">搜索商品 / 团长 / 关键词</view>
+  <view class="filters">
+    <text class="chip on">出谷子/文创</text>
+    <text class="chip">直出</text>
+    <text class="chip">捆出</text>
+    <text class="chip">自选</text>
+  </view>
+
+  <view class="section-title">开团市场</view>
+  <block wx:for="{{groups}}" wx:key="title">
+    <view class="card group" data-group-id="{{item.id}}" bindtap="openGroup">
+      <view class="title">{{item.title}}</view>
+      <view class="meta">{{item.host}}</view>
+      <view class="line">
+        <text class="price">{{item.priceLabel}}</text>
+        <text class="stock">{{item.stockLabel}}</text>
+        <text class="chip state">{{item.statusLabel}}</text>
+      </view>
+    </view>
+  </block>
+</view>
+<bottom-nav active="market" />

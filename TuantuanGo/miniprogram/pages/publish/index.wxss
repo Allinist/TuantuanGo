@@ -1,0 +1,15 @@
+.page { padding: 24rpx; }
+.form { padding: 24rpx; }
+.label { font-size: 24rpx; color: #8d716a; margin-top: 20rpx; margin-bottom: 10rpx; }
+.input, .upload {
+  background: #fff0ed; border-radius: 16rpx; padding: 20rpx; color: #59413c;
+}
+.options { display: flex; gap: 12rpx; }
+.opt {
+  padding: 12rpx 20rpx; background: #ffe9e5; border-radius: 999rpx; color: #8d716a; font-size: 24rpx;
+}
+.opt.on { background: #ff6b4a; color: #fff; }
+.submit {
+  margin-top: 24rpx; background: #ff6b4a; color: #fff; text-align: center;
+  border-radius: 20rpx; padding: 24rpx; font-size: 30rpx; font-weight: 700;
+}

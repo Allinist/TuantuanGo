@@ -1,0 +1,29 @@
+page {
+  background: #fff8f6;
+  color: #261815;
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+.safe-bottom {
+  padding-bottom: 168rpx;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 24rpx rgba(38, 24, 21, 0.06);
+}
+
+.section-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  margin-bottom: 20rpx;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 8rpx 16rpx;
+  border-radius: 999rpx;
+  font-size: 22rpx;
+}

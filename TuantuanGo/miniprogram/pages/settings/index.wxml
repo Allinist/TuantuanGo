@@ -1,0 +1,17 @@
+<view class="safe-bottom page">
+  <view class="card profile">
+    <view class="avatar">团</view>
+    <view>
+      <view class="name">团团用户_1024</view>
+      <view class="sub">{{roleText}}</view>
+    </view>
+  </view>
+  <view class="switch-role" bindtap="toggleRole">开发用：切换买家/团长</view>
+  <view class="card panel">
+    <view class="row"><text>通知设置</text><text>></text></view>
+    <view class="row"><text>免广告权益</text><text>></text></view>
+    <view class="row"><text>团长工作台</text><text>></text></view>
+    <view class="row"><text>帮助与反馈</text><text>></text></view>
+  </view>
+</view>
+<bottom-nav active="settings" />

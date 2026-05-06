@@ -1,0 +1,12 @@
+.page { padding: 24rpx; }
+.search { padding: 24rpx; color: #8d716a; margin-bottom: 16rpx; }
+.filters { display: flex; gap: 12rpx; margin-bottom: 28rpx; flex-wrap: wrap; }
+.chip { background: #ffe9e5; color: #8d716a; }
+.chip.on { background: #ff6b4a; color: #fff; }
+.group { padding: 24rpx; margin-bottom: 20rpx; }
+.title { font-size: 30rpx; font-weight: 700; margin-bottom: 8rpx; }
+.meta { color: #8d716a; font-size: 24rpx; margin-bottom: 16rpx; }
+.line { display: flex; align-items: center; gap: 14rpx; }
+.price { color: #ae3115; font-size: 34rpx; font-weight: 700; }
+.stock { color: #59413c; font-size: 24rpx; }
+.state { background: #e9fbf6; color: #00705d; margin-left: auto; }

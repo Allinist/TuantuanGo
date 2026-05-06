@@ -1,0 +1,4 @@
+{
+  "desc": "TuantuanGo sitemap",
+  "rules": [{ "action": "allow", "page": "*" }]
+}

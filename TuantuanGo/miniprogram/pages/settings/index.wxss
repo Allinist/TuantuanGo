@@ -1,0 +1,15 @@
+.page { padding: 24rpx; }
+.profile { padding: 24rpx; display: flex; align-items: center; gap: 20rpx; margin-bottom: 16rpx; }
+.avatar {
+  width: 88rpx; height: 88rpx; border-radius: 44rpx; background: #ff6b4a;
+  color: #fff; text-align: center; line-height: 88rpx; font-weight: 700;
+}
+.name { font-size: 30rpx; font-weight: 700; }
+.sub { color: #8d716a; font-size: 22rpx; margin-top: 4rpx; }
+.switch-role {
+  margin-bottom: 16rpx; background: #261815; color: #fff; text-align: center;
+  border-radius: 16rpx; padding: 18rpx; font-size: 24rpx;
+}
+.panel { padding: 8rpx 24rpx; }
+.row { display: flex; justify-content: space-between; padding: 24rpx 0; border-bottom: 1rpx solid #f6ddd8; }
+.row:last-child { border-bottom: none; }

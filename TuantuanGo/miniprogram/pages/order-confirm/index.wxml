@@ -1,0 +1,30 @@
+<view class="page">
+  <view class="section-title">确认订单</view>
+  <view class="card block">
+    <view class="k">团</view>
+    <view class="v">{{group ? group.title : '-'}}</view>
+    <view class="k">商品明细</view>
+    <block wx:for="{{cart.items}}" wx:key="productId">
+      <view class="line">
+        <text>{{item.name}} x {{item.quantity}}</text>
+        <text>¥{{item.price * item.quantity}}</text>
+      </view>
+    </block>
+  </view>
+  <view wx:if="{{amount}}" class="card block">
+    <view class="line"><text>商品金额</text><text>¥{{amount.productAmount}}</text></view>
+    <view class="line"><text>邮费</text><text>¥{{amount.shippingFee}}</text></view>
+    <view class="line"><text>打包费</text><text>¥{{amount.packingFee}}</text></view>
+    <view class="line"><text>物料费</text><text>¥{{amount.materialFee}}</text></view>
+    <view class="line total"><text>应付金额</text><text>¥{{amount.totalAmount}}</text></view>
+  </view>
+  <view class="card block">
+    <view class="k">收款二维码</view>
+    <view class="qr">{{group ? group.paymentQrHint : '二维码展示区'}}</view>
+    <view class="k">支付截图</view>
+    <view class="upload" bindtap="chooseProof">{{proofName || '点击上传支付截图'}}</view>
+    <view class="k">买家备注</view>
+    <textarea class="remark" placeholder="可填写收货偏好、编号偏好等" bindinput="onRemarkInput" value="{{remark}}" />
+  </view>
+  <view class="submit" bindtap="submitOrder">确认提交</view>
+</view>

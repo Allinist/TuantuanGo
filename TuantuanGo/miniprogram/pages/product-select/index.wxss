@@ -1,0 +1,15 @@
+.page { padding: 24rpx; }
+.hint { color: #8d716a; font-size: 22rpx; margin-bottom: 16rpx; }
+.item { padding: 24rpx; margin-bottom: 16rpx; }
+.name { font-size: 30rpx; font-weight: 600; margin-bottom: 8rpx; }
+.meta { color: #8d716a; font-size: 22rpx; margin-bottom: 14rpx; }
+.row { display: flex; align-items: center; justify-content: space-between; }
+.price { color: #ae3115; font-size: 34rpx; font-weight: 700; }
+.btn {
+  background: #ff6b4a; color: #fff; border-radius: 16rpx;
+  padding: 12rpx 20rpx; font-size: 24rpx; font-weight: 600;
+}
+.go {
+  margin-top: 20rpx; background: #261815; color: #fff; text-align: center;
+  padding: 22rpx; border-radius: 20rpx; font-size: 28rpx;
+}

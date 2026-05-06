@@ -1,0 +1,20 @@
+<view class="page">
+  <view class="section-title">发布团购</view>
+  <view class="card form">
+    <view class="label">商品名称</view>
+    <view class="input">例如：初音未来纪念手办</view>
+    <view class="label">销售规则</view>
+    <view class="options">
+      <text class="opt on">直出</text><text class="opt">捆出</text><text class="opt">自选</text>
+    </view>
+    <view class="label">团类型</view>
+    <view class="options">
+      <text class="opt">单人团</text><text class="opt on">多人拼团</text>
+    </view>
+    <view class="label">发车条件</view>
+    <view class="input">输入成团件数 / 金额</view>
+    <view class="label">收款二维码</view>
+    <view class="upload">点击上传二维码</view>
+  </view>
+  <view class="submit">确认并发起团购</view>
+</view>
