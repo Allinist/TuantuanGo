@@ -1,28 +1,142 @@
 <view class="safe-bottom page">
-  <view class="section-title">团：{{group ? group.title : '暂无'}}</view>
-  <view wx:if="{{!cart.items.length}}" class="card empty">还没有商品，先去团详情选购。</view>
-  <block wx:for="{{cart.items}}" wx:key="productId">
+  <block wx:if="{{isLeader}}">
+    <view class="leader-tabs">
+      <view class="leader-tab {{activeLeaderTab==='review'?'on':''}}" data-tab="review" bindtap="switchLeaderTab">审核({{leaderTabCounts.review}})</view>
+      <view class="leader-tab {{activeLeaderTab==='merge'?'on':''}}" data-tab="merge" bindtap="switchLeaderTab">合并({{leaderTabCounts.merge}})</view>
+      <view class="leader-tab {{activeLeaderTab==='transfer'?'on':''}}" data-tab="transfer" bindtap="switchLeaderTab">转单({{leaderTabCounts.transfer}})</view>
+      <view class="leader-tab {{activeLeaderTab==='return'?'on':''}}" data-tab="return" bindtap="switchLeaderTab">退货({{leaderTabCounts.return}})</view>
+      <view class="leader-tab {{activeLeaderTab==='afterSale'?'on':''}}" data-tab="afterSale" bindtap="switchLeaderTab">售后({{leaderTabCounts.afterSale}})</view>
+    </view>
     <view class="card item">
-      <view class="name">{{item.name}}</view>
-      <view class="rule">规则来源：{{item.ruleType}} · 编号：{{item.unitCode}}</view>
-      <view class="row">
-        <text>¥{{item.price}} x {{item.quantity}}</text>
-        <text>小计 ¥{{item.price * item.quantity}}</text>
+      <view class="rule">审核备注（本次操作）</view>
+      <textarea class="remark" placeholder="通过可留空；驳回建议填写原因" bindinput="onRemarkInput" value="{{reviewRemark}}" />
+    </view>
+    <view wx:if="{{activeLeaderTab==='review' && !pendingOrders.length}}" class="card empty">暂无待审核订单。</view>
+    <block wx:if="{{activeLeaderTab==='review'}}" wx:for="{{pendingOrders}}" wx:key="id">
+      <view class="card item">
+        <view class="name">{{item.groupTitle}}</view>
+        <view class="rule">订单号 {{item.orderNo}} · 应付 ¥{{item.amount.totalAmount}}</view>
+        <view class="leader-ops">
+          <view class="small ghost" data-order-id="{{item.id}}" bindtap="openOrder">详情</view>
+          <view class="small reject" data-order-id="{{item.id}}" bindtap="reject">驳回</view>
+          <view class="small approve" data-order-id="{{item.id}}" bindtap="approve">通过</view>
+        </view>
       </view>
-      <view class="qty">
-        <view class="op" data-product-id="{{item.productId}}" bindtap="minus">-</view>
-        <text>{{item.quantity}}</text>
-        <view class="op" data-product-id="{{item.productId}}" bindtap="plus">+</view>
+    </block>
+    <view wx:if="{{activeLeaderTab==='merge' && !mergeRequestedOrders.length}}" class="card empty">暂无待处理合并申请。</view>
+    <block wx:if="{{activeLeaderTab==='merge'}}" wx:for="{{mergeRequestedOrders}}" wx:key="id">
+      <view class="card item">
+        <view class="name">{{item.groupTitle}}</view>
+        <view class="rule">订单号 {{item.orderNo}} · 状态 {{item.mergeShipment.status}}</view>
+        <view class="leader-ops">
+          <view class="small ghost" data-order-id="{{item.id}}" bindtap="openOrder">详情</view>
+          <view class="small reject" data-order-id="{{item.id}}" bindtap="rejectMerge">驳回合并</view>
+          <view class="small approve" data-order-id="{{item.id}}" bindtap="approveMerge">通过合并</view>
+        </view>
+      </view>
+    </block>
+    <view wx:if="{{activeLeaderTab==='transfer' && !transferRequestedOrders.length}}" class="card empty">暂无待处理转单申请。</view>
+    <block wx:if="{{activeLeaderTab==='transfer'}}" wx:for="{{transferRequestedOrders}}" wx:key="id">
+      <view class="card item">
+        <view class="name">{{item.groupTitle}}</view>
+        <view class="rule">订单号 {{item.orderNo}} · 接收人 {{item.transferRecord.toUser}}</view>
+        <view class="leader-ops">
+          <view class="small ghost" data-order-id="{{item.id}}" bindtap="openOrder">详情</view>
+          <view class="small reject" data-order-id="{{item.id}}" bindtap="rejectTransfer">驳回转单</view>
+          <view class="small approve" data-order-id="{{item.id}}" bindtap="approveTransfer">确认转单</view>
+        </view>
+      </view>
+    </block>
+    <view wx:if="{{activeLeaderTab==='return' && !receiveIssueOrders.length}}" class="card empty">暂无待处理拒收申请。</view>
+    <block wx:if="{{activeLeaderTab==='return'}}" wx:for="{{receiveIssueOrders}}" wx:key="id">
+      <view class="card item">
+        <view class="name">{{item.groupTitle}}</view>
+        <view class="rule">订单号 {{item.orderNo}} · 原因 {{item.receiveIssue.reason}}</view>
+        <view class="leader-ops">
+          <view class="small ghost" data-order-id="{{item.id}}" bindtap="openOrder">详情</view>
+          <view class="small reject" data-order-id="{{item.id}}" bindtap="rejectReceiveIssue">驳回拒收</view>
+          <view class="small approve" data-order-id="{{item.id}}" bindtap="approveReceiveIssue">通过拒收</view>
+        </view>
+      </view>
+    </block>
+    <view wx:if="{{activeLeaderTab==='afterSale' && !afterSaleOrders.length}}" class="card empty">暂无待处理售后申请。</view>
+    <block wx:if="{{activeLeaderTab==='afterSale'}}" wx:for="{{afterSaleOrders}}" wx:key="id" wx:for-item="orderItem">
+      <view class="card item">
+        <view class="name">{{orderItem.groupTitle}}</view>
+        <block wx:for="{{orderItem.pendingAfterSales}}" wx:key="id" wx:for-item="asItem">
+          <view class="rule">
+            {{asItem.type}}：{{asItem.reason}} {{asItem.amount ? ('¥' + asItem.amount) : ''}}
+          </view>
+          <view wx:if="{{asItem.allocationRows.length}}" class="alloc-box">
+            <view class="alloc-title">退款分摊（按分向下取整）</view>
+            <block wx:for="{{asItem.allocationRows}}" wx:key="label">
+              <view class="alloc-line">
+                <text>{{item.label}}</text>
+                <text>¥{{item.amountYuanText}}</text>
+              </view>
+            </block>
+            <view class="alloc-line">
+              <text>差额</text>
+              <text>¥{{asItem.allocationRemainderYuanText}}</text>
+            </view>
+            <view class="alloc-line total">
+              <text>合计</text>
+              <text>¥{{asItem.allocationTotalYuanText}}</text>
+            </view>
+          </view>
+          <view class="leader-ops">
+            <view class="small reject" data-order-id="{{orderItem.id}}" data-after-sale-id="{{asItem.id}}" bindtap="rejectAfterSale">驳回</view>
+            <view class="small approve" data-order-id="{{orderItem.id}}" data-after-sale-id="{{asItem.id}}" bindtap="approveAfterSale">通过</view>
+          </view>
+        </block>
+      </view>
+    </block>
+  </block>
+
+  <block wx:else>
+    <view class="cart-toolbar">
+      <view class="toolbar-title">当前{{cartGroupCount}}/{{cartGroupLimit}}</view>
+      <view class="toolbar-actions">
+        <block wx:if="{{!selecting}}">
+          <text class="tool-btn" bindtap="startSelectDelete">多选删除</text>
+        </block>
+        <block wx:else>
+          <text class="tool-btn danger" bindtap="deleteSelectedGroups">删除</text>
+          <text class="tool-btn" bindtap="cancelSelectDelete">取消</text>
+        </block>
       </view>
     </view>
+    <view wx:if="{{!cartGroups.length}}" class="card empty">还没有商品，先去团详情选购。</view>
+    <block wx:for="{{cartGroups}}" wx:key="groupId" wx:for-item="groupCart">
+      <view class="card cart-group">
+        <view class="group-head">
+          <view class="section-title">{{groupCart.group ? groupCart.group.title : groupCart.groupId}}</view>
+          <view class="group-head-actions">
+            <text wx:if="{{selecting}}" class="select-mark {{selectedGroupIds.indexOf(groupCart.groupId) > -1 ? 'on' : ''}}" data-group-id="{{groupCart.groupId}}" bindtap="toggleSelectGroup">{{selectedGroupIds.indexOf(groupCart.groupId) > -1 ? '已选' : '选择'}}</text>
+            <text class="delete-one" data-group-id="{{groupCart.groupId}}" bindtap="removeGroup">删除</text>
+          </view>
+        </view>
+        <block wx:for="{{groupCart.items}}" wx:key="productId" wx:for-item="cartItem">
+          <view class="item">
+            <view class="name">{{cartItem.name}}</view>
+            <view class="rule">规则来源：{{cartItem.ruleLabel}} · 编号：{{cartItem.unitCode}} · {{cartItem.presaleDate ? ('预售 ' + cartItem.presaleDate) : '现货'}}</view>
+            <view class="row">
+              <text>¥{{cartItem.price}} x {{cartItem.quantity}}</text>
+              <text>小计 ¥{{cartItem.price * cartItem.quantity}}</text>
+            </view>
+            <qty-stepper value="{{cartItem.quantity}}" product-id="{{cartItem.productId}}" group-id="{{groupCart.groupId}}" bindchange="onQtyChange" />
+          </view>
+        </block>
+        <view wx:if="{{groupCart.amount}}" class="fee">
+          <view class="row"><text>商品金额</text><text>¥{{groupCart.amount.productAmount}}</text></view>
+          <view class="row"><text>邮费</text><text>¥{{groupCart.amount.shippingFee}}</text></view>
+          <view class="row"><text>打包费</text><text>¥{{groupCart.amount.packingFee}}</text></view>
+          <view class="row"><text>物料费</text><text>¥{{groupCart.amount.materialFee}}</text></view>
+          <view class="row total"><text>应付</text><text>¥{{groupCart.amount.totalAmount}}</text></view>
+        </view>
+        <view class="submit" data-group-id="{{groupCart.groupId}}" bindtap="submitGroup">提交该团订单</view>
+      </view>
+    </block>
   </block>
-  <view wx:if="{{amount}}" class="card fee">
-    <view class="row"><text>商品金额</text><text>¥{{amount.productAmount}}</text></view>
-    <view class="row"><text>邮费</text><text>¥{{amount.shippingFee}}</text></view>
-    <view class="row"><text>打包费</text><text>¥{{amount.packingFee}}</text></view>
-    <view class="row"><text>物料费</text><text>¥{{amount.materialFee}}</text></view>
-    <view class="row total"><text>应付</text><text>¥{{amount.totalAmount}}</text></view>
-  </view>
-  <view class="submit" bindtap="submit">提交订单</view>
 </view>
 <bottom-nav active="cart" />

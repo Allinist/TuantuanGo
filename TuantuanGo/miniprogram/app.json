@@ -6,9 +6,12 @@
     "pages/cart/index",
     "pages/order-confirm/index",
     "pages/orders/index",
+    "pages/order-detail/index",
     "pages/settings/index",
     "pages/publish/index",
-    "pages/leader-apply/index"
+    "pages/leader-apply/index",
+    "pages/leader-order-review/index",
+    "pages/leader-shipping/index"
   ],
   "window": {
     "navigationBarTitleText": "TuantuanGo",

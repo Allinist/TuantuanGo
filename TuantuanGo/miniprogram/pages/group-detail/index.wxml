@@ -10,9 +10,15 @@
 
   <view class="card block">
     <view class="k">销售规则</view>
-    <view class="v">自选模式，满 ¥{{group.freeShippingThreshold}} 包邮，支持追加与合并发货。</view>
+    <view class="v">规则：{{group.saleRuleType}}，满 ¥{{group.freeShippingThreshold}} 包邮，支持追加与合并发货。</view>
     <view class="k">发车条件</view>
     <view class="v">{{group.departureCondition}}</view>
+    <view wx:if="{{group.groupType === 'multi'}}" class="progress-wrap">
+      <view class="progress-track">
+        <view class="progress-fill" style="width: {{group.progressPercent || 0}}%;"></view>
+      </view>
+      <view class="progress-text">发车进度 {{group.progressPercent || 0}}%</view>
+    </view>
   </view>
 
   <view class="card block">

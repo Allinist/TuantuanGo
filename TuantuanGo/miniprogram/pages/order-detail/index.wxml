@@ -1,0 +1,121 @@
+<view class="page">
+  <view wx:if="{{order}}" class="safe-bottom">
+    <view class="card block">
+      <view class="top">
+        <text class="title">订单状态</text>
+        <text class="status">{{statusText}}</text>
+      </view>
+      <view class="line"><text>订单号</text><text>{{order.orderNo}}</text></view>
+      <view class="line"><text>支付审核</text><text>{{paymentReviewText}}</text></view>
+      <view class="line"><text>发货状态</text><text>{{shipmentStatusText}}</text></view>
+      <view wx:if="{{order.autoCompleteAt}}" class="line"><text>自动完成时间</text><text>{{autoCompleteText}}</text></view>
+    </view>
+
+    <view class="card block">
+      <view class="title">商品明细</view>
+      <block wx:for="{{order.items}}" wx:key="productId">
+        <view class="line">
+          <text>{{item.name}} x {{item.quantity}}</text>
+          <text>¥{{item.price * item.quantity}}</text>
+        </view>
+      </block>
+      <view class="line total"><text>应付金额</text><text>¥{{order.amount.totalAmount}}</text></view>
+    </view>
+
+    <view class="card block">
+      <view class="title">物流信息</view>
+      <view class="line"><text>物流公司</text><text>{{order.logisticsCompany || '待填写'}}</text></view>
+      <view class="line">
+        <text>物流单号</text>
+        <view class="track-box">
+          <text>{{order.trackingNo || '待生成'}}</text>
+          <text wx:if="{{order.trackingNo}}" class="copy" bindtap="copyTrackingNo">复制</text>
+        </view>
+      </view>
+      <view class="trace-title">物流轨迹</view>
+      <block wx:for="{{order.trackingEvents}}" wx:key="time">
+        <view class="trace-item">
+          <text class="trace-time">{{item.time}}</text>
+          <text class="trace-text">{{item.text}}</text>
+        </view>
+      </block>
+      <view wx:if="{{order.mergeShipment.mergeNo}}" class="trace-title">合并单共享轨迹（{{order.mergeShipment.mergeNo}}）</view>
+      <block wx:for="{{sharedTracking}}" wx:key="time">
+        <view class="trace-item">
+          <text class="trace-time">{{item.time}}</text>
+          <text class="trace-text">{{item.text}}</text>
+        </view>
+      </block>
+    </view>
+
+    <view class="card block">
+      <view class="title">合并发货</view>
+      <view class="line"><text>状态</text><text>{{order.mergeShipment.status}}</text></view>
+      <view class="line"><text>合并单号</text><text>{{order.mergeShipment.mergeNo || '-'}}</text></view>
+      <view class="line"><text>团长备注</text><text>{{order.mergeShipment.leaderRemark || '-'}}</text></view>
+      <view class="line"><text>关联订单</text><text>{{order.mergeShipment.relatedOrderNos.length ? order.mergeShipment.relatedOrderNos.join(',') : '-'}}</text></view>
+      <view class="btn ghost" bindtap="applyMerge">申请合并发货</view>
+    </view>
+
+    <view class="card block">
+      <view class="title">转单记录</view>
+      <view class="line"><text>状态</text><text>{{order.transferRecord.status}}</text></view>
+      <view class="line"><text>原买家</text><text>{{order.transferRecord.fromUser}}</text></view>
+      <view class="line"><text>接收人</text><text>{{order.transferRecord.toUser || '-'}}</text></view>
+      <view class="btn ghost" bindtap="applyTransfer">申请转单</view>
+    </view>
+
+    <view class="card block">
+      <view class="title">售后服务</view>
+      <view class="actions">
+        <view class="btn ghost" bindtap="requestReturnRefund">退货退款</view>
+        <view class="btn ghost" bindtap="requestPartialRefund">部分退款</view>
+        <view class="btn ghost" bindtap="requestReshipment">补发货</view>
+      </view>
+      <view wx:if="{{order.afterSales && order.afterSales.length}}" class="trace-title">售后记录</view>
+      <block wx:for="{{order.afterSales}}" wx:key="id">
+        <view class="trace-item">
+          <text class="trace-time">{{item.typeLabel}} · {{item.statusLabel}}</text>
+          <text class="trace-text">{{item.reason}} {{item.amount ? ('¥' + item.amount) : ''}}</text>
+        </view>
+      </block>
+      <view wx:if="{{order.returnShipment && order.returnShipment.trackingNo}}" class="trace-title">退回物流</view>
+      <view wx:if="{{order.returnShipment && order.returnShipment.trackingNo}}" class="trace-item">
+        <text class="trace-time">{{order.returnShipment.logisticsCompany}}</text>
+        <text class="trace-text">{{order.returnShipment.trackingNo}}</text>
+      </view>
+      <view wx:if="{{order.refundStatus}}" class="trace-title">退款进度</view>
+      <view wx:if="{{order.refundStatus}}" class="trace-item">
+        <text class="trace-time">{{order.refundStatus}}</text>
+        <text class="trace-text">{{order.refundAmount ? ('已退款 ¥' + order.refundAmount) : '处理中'}}</text>
+      </view>
+      <view wx:if="{{order.refundAmount && refundRows.length}}" class="trace-title">退款明细分摊（按分向下取整）</view>
+      <block wx:for="{{refundRows}}" wx:key="label">
+        <view class="line">
+          <text>{{item.label}}</text>
+          <text>¥{{item.amountYuanText}}</text>
+        </view>
+      </block>
+      <view wx:if="{{order.refundAmount && refundRows.length}}" class="line">
+        <text>差额（单独显示）</text>
+        <text>¥{{refundRemainderYuanText}}</text>
+      </view>
+      <view wx:if="{{order.refundAmount && refundRows.length}}" class="line total">
+        <text>退款合计</text>
+        <text>¥{{refundTotalYuanText}}</text>
+      </view>
+      <view wx:if="{{order.reshipment && order.reshipment.trackingNo}}" class="trace-title">补发物流</view>
+      <view wx:if="{{order.reshipment && order.reshipment.trackingNo}}" class="trace-item">
+        <text class="trace-time">{{order.reshipment.logisticsCompany}}</text>
+        <text class="trace-text">{{order.reshipment.trackingNo}}</text>
+      </view>
+    </view>
+
+    <view class="actions">
+      <view class="btn ghost" bindtap="confirmReceived">确认收货</view>
+      <view class="btn ghost" bindtap="extendReceive3Days">延长3天</view>
+      <view class="btn ghost" bindtap="rejectReceive">拒绝收货</view>
+      <view wx:if="{{canReview}}" class="btn solid" bindtap="goReview">去评价团长</view>
+    </view>
+  </view>
+</view>

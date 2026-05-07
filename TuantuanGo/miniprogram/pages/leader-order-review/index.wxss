@@ -1,0 +1,18 @@
+.page { padding: 24rpx; padding-bottom: 24rpx; }
+.remark-box { padding: 24rpx; margin-bottom: 16rpx; }
+.label { font-size: 24rpx; color: #8d716a; margin-bottom: 10rpx; }
+.remark {
+  width: 100%; min-height: 120rpx; box-sizing: border-box; background: #fff0ed;
+  border-radius: 14rpx; padding: 14rpx;
+}
+.empty { padding: 26rpx; color: #8d716a; }
+.order { padding: 24rpx; margin-bottom: 16rpx; }
+.top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10rpx; }
+.title { font-size: 28rpx; font-weight: 700; color: #261815; }
+.status { font-size: 22rpx; color: #00705d; background: #e9fbf6; padding: 8rpx 12rpx; border-radius: 999rpx; }
+.line { display: flex; justify-content: space-between; color: #59413c; font-size: 24rpx; margin-bottom: 8rpx; }
+.ops { display: flex; gap: 10rpx; margin-top: 12rpx; }
+.btn { flex: 1; text-align: center; padding: 14rpx; border-radius: 14rpx; font-size: 24rpx; font-weight: 600; }
+.btn.ghost { border: 1rpx solid #e1bfb8; color: #59413c; background: #fff; }
+.btn.reject { background: #ffd9d4; color: #93000a; }
+.btn.approve { background: #ff6b4a; color: #fff; }

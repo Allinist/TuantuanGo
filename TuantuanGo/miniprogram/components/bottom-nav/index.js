@@ -5,19 +5,32 @@ Component({
       value: "market"
     }
   },
+  data: {
+    isLeader: false
+  },
+  lifetimes: {
+    attached() {
+      this.syncRole();
+    }
+  },
+  pageLifetimes: {
+    show() {
+      this.syncRole();
+    }
+  },
   methods: {
+    syncRole() {
+      const { isLeader } = require("../../stores/session-store");
+      this.setData({ isLeader: isLeader() });
+    },
     go(e) {
       const page = e.currentTarget.dataset.page;
       if (!page || page === this.properties.active) return;
       wx.redirectTo({ url: `/pages/${page}/index` });
     },
-    publish() {
-      const isLeader = !!wx.getStorageSync("ttg_is_leader");
-      if (isLeader) {
-        wx.navigateTo({ url: "/pages/publish/index" });
-      } else {
-        wx.navigateTo({ url: "/pages/leader-apply/index" });
-      }
+    publishOrSearch() {
+      if (!this.data.isLeader) return;
+      wx.navigateTo({ url: "/pages/publish/index" });
     }
   }
 });

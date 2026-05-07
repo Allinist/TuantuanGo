@@ -1,0 +1,19 @@
+.page { padding: 24rpx; }
+.block { padding: 24rpx; margin-bottom: 16rpx; }
+.top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12rpx; }
+.title { font-size: 30rpx; font-weight: 700; color: #261815; }
+.status {
+  font-size: 22rpx; color: #00705d; background: #e9fbf6; padding: 8rpx 14rpx; border-radius: 999rpx;
+}
+.line { display: flex; justify-content: space-between; margin-bottom: 10rpx; color: #59413c; font-size: 24rpx; gap: 16rpx; }
+.total { margin-top: 8rpx; color: #ae3115; font-weight: 700; }
+.track-box { display: inline-flex; align-items: center; gap: 12rpx; }
+.copy { color: #ae3115; font-size: 22rpx; }
+.trace-title { margin-top: 10rpx; margin-bottom: 10rpx; font-size: 24rpx; color: #8d716a; }
+.trace-item { padding: 12rpx 0; border-top: 1rpx solid #f6ddd8; }
+.trace-time { display: block; color: #8d716a; font-size: 22rpx; margin-bottom: 4rpx; }
+.trace-text { display: block; color: #261815; font-size: 24rpx; }
+.actions { display: flex; gap: 16rpx; padding-bottom: 20rpx; }
+.btn { text-align: center; border-radius: 16rpx; padding: 20rpx; font-size: 26rpx; font-weight: 600; }
+.btn.ghost { background: #fff; border: 1rpx solid #e1bfb8; color: #59413c; }
+.btn.solid { background: #ff6b4a; color: #fff; }

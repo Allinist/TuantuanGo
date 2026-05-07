@@ -1,6 +1,12 @@
 .page { padding: 24rpx; }
 .hint { color: #8d716a; font-size: 22rpx; margin-bottom: 16rpx; }
 .item { padding: 24rpx; margin-bottom: 16rpx; }
+.bundle-title { font-size: 24rpx; color: #59413c; margin: 8rpx 0 12rpx; }
+.bundle-item {
+  padding: 24rpx; margin-bottom: 14rpx; display: flex; align-items: center; justify-content: space-between;
+  border: 2rpx solid transparent;
+}
+.bundle-item.selected { border-color: #ff6b4a; background: #fff0ed; }
 .name { font-size: 30rpx; font-weight: 600; margin-bottom: 8rpx; }
 .meta { color: #8d716a; font-size: 22rpx; margin-bottom: 14rpx; }
 .row { display: flex; align-items: center; justify-content: space-between; }

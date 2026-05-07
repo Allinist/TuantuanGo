@@ -7,10 +7,20 @@
     </view>
   </view>
   <view class="switch-role" bindtap="toggleRole">开发用：切换买家/团长</view>
+  <view class="card policy" wx:if="{{roleText === '角色：团长卖家'}}">
+    <view class="policy-title">自动签收完成策略</view>
+    <view class="policy-row">
+      <text>发货后自动完成（天）</text>
+      <input class="policy-input" type="number" value="{{autoCompleteDays}}" bindinput="onAutoDaysInput" />
+    </view>
+    <view class="policy-tip">默认 14 天，可设置 7-28 天</view>
+    <view class="policy-btn" bindtap="saveAutoDays">保存策略</view>
+  </view>
   <view class="card panel">
     <view class="row"><text>通知设置</text><text>></text></view>
     <view class="row"><text>免广告权益</text><text>></text></view>
-    <view class="row"><text>团长工作台</text><text>></text></view>
+    <view wx:if="{{isLeader}}" class="row" bindtap="goLeaderReview"><text>团长订单审核</text><text>></text></view>
+    <view wx:if="{{isLeader}}" class="row" bindtap="goLeaderShipping"><text>团长发货管理</text><text>></text></view>
     <view class="row"><text>帮助与反馈</text><text>></text></view>
   </view>
 </view>

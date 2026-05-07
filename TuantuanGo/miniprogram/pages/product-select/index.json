@@ -1,1 +1,6 @@
-{ "navigationBarTitleText": "商品选择" }
+{
+  "navigationBarTitleText": "商品选择",
+  "usingComponents": {
+    "qty-stepper": "/components/qty-stepper/index"
+  }
+}

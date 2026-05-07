@@ -1,23 +1,116 @@
 <view class="safe-bottom page">
-  <view class="chips">
-    <text class="chip on">全部</text>
-    <text class="chip">待审核</text>
-    <text class="chip">已确认</text>
-    <text class="chip">已发货</text>
-  </view>
-  <view wx:if="{{!orders.length}}" class="card order">
-    <view class="name">暂无订单，先去市场选购。</view>
-  </view>
-  <block wx:for="{{orders}}" wx:key="id">
-    <view class="card order">
-      <view class="top">
-        <text class="merchant">{{item.leaderName}}</text>
-        <text class="status">{{item.statusLabel}}</text>
-      </view>
-      <view class="name">{{item.groupTitle}}</view>
-      <view class="meta">订单号 {{item.orderNo}} · 共 {{item.items.length}} 件</view>
-      <view class="price">{{item.amountLabel}}</view>
+  <block wx:if="{{isLeader}}">
+    <view class="leader-tabs">
+      <view class="leader-tab {{activeShipTab==='ship'?'on':''}}" data-tab="ship" bindtap="switchShipTab">发货({{shipTabCounts.ship}})</view>
+      <view class="leader-tab {{activeShipTab==='merge'?'on':''}}" data-tab="merge" bindtap="switchShipTab">合并({{shipTabCounts.merge}})</view>
+      <view class="leader-tab {{activeShipTab==='reship'?'on':''}}" data-tab="reship" bindtap="switchShipTab">补发({{shipTabCounts.reship}})</view>
+      <view class="leader-tab {{activeShipTab==='refund'?'on':''}}" data-tab="refund" bindtap="switchShipTab">退换({{shipTabCounts.refund}})</view>
     </view>
+    <view class="card ship-form">
+      <view class="toggle" bindtap="toggleNoLogistics">
+        <text>无需物流</text><text>{{noLogistics ? '已开启' : '未开启'}}</text>
+      </view>
+      <view wx:if="{{noLogistics}}">
+        <view class="row"><text>无需物流原因</text></view>
+        <input class="input" value="{{noLogisticsReason}}" bindinput="onReasonInput" />
+      </view>
+      <view class="row"><text>物流/快递信息</text></view>
+      <block wx:for="{{logisticsEntries}}" wx:key="id">
+        <view class="entry-box">
+          <input class="input" data-id="{{item.id}}" value="{{item.logisticsCompany}}" placeholder="物流公司" bindinput="onEntryCompanyInput" />
+          <input class="input" data-id="{{item.id}}" value="{{item.trackingNo}}" placeholder="物流单号" bindinput="onEntryTrackingInput" />
+          <view class="remove-entry" data-id="{{item.id}}" bindtap="removeLogisticsEntry">删除该条</view>
+        </view>
+      </block>
+      <view class="batch-btn light" bindtap="addLogisticsEntry">增加物流/快递信息</view>
+      <view class="batch-btn" bindtap="shipBatch">批量发货（已选 {{selectedOrderIds.length}}）</view>
+    </view>
+    <view wx:if="{{activeShipTab==='ship' && !confirmedOrders.length}}" class="card order">
+      <view class="name">暂无待发货订单。</view>
+    </view>
+    <block wx:if="{{activeShipTab==='ship'}}" wx:for="{{confirmedOrders}}" wx:key="id">
+      <view class="card order">
+        <view class="top">
+          <text class="merchant">{{item.leaderName}}</text>
+          <text class="status">待发货</text>
+        </view>
+        <view class="pick" data-order-id="{{item.id}}" bindtap="toggleSelect">
+          <text>{{selectedOrderIds.indexOf(item.id) > -1 ? '已选中' : '点此选中'}}</text>
+        </view>
+        <view class="name">{{item.groupTitle}}</view>
+        <view class="meta">订单号 {{item.orderNo}}</view>
+        <view class="price">¥{{item.amount.totalAmount}}</view>
+        <view class="ship-btn" data-order-id="{{item.id}}" bindtap="ship">确认发货</view>
+      </view>
+    </block>
+    <view wx:if="{{activeShipTab==='merge' && !mergeApprovedGroups.length}}" class="card order">
+      <view class="name">暂无待发货合并单。</view>
+    </view>
+    <block wx:if="{{activeShipTab==='merge'}}" wx:for="{{mergeApprovedGroups}}" wx:key="mergeNo">
+      <view class="card order">
+        <view class="top">
+          <text class="merchant">合并单 {{item.mergeNo}}</text>
+          <text class="status">待发货</text>
+        </view>
+        <view class="meta">关联订单 {{item.count}} 单</view>
+        <view class="ship-btn" data-merge-no="{{item.mergeNo}}" bindtap="shipMerge">按合并单发货</view>
+      </view>
+    </block>
+    <view wx:if="{{activeShipTab==='reship' && !reshipmentOrders.length}}" class="card order">
+      <view class="name">暂无待录入补发物流的订单。</view>
+    </view>
+    <block wx:if="{{activeShipTab==='reship'}}" wx:for="{{reshipmentOrders}}" wx:key="id">
+      <view class="card order">
+        <view class="top">
+          <text class="merchant">{{item.leaderName}}</text>
+          <text class="status">补发待发货</text>
+        </view>
+        <view class="name">{{item.groupTitle}}</view>
+        <view class="meta">订单号 {{item.orderNo}}</view>
+        <view class="ship-btn" data-order-id="{{item.id}}" bindtap="shipReshipment">提交补发物流</view>
+      </view>
+    </block>
+    <view wx:if="{{activeShipTab==='refund' && !returnRefundOrders.length}}" class="card order">
+      <view class="name">暂无待处理退货退款订单。</view>
+    </view>
+    <block wx:if="{{activeShipTab==='refund'}}" wx:for="{{returnRefundOrders}}" wx:key="id">
+      <view class="card order">
+        <view class="top">
+          <text class="merchant">{{item.leaderName}}</text>
+          <text class="status">退货退款处理中</text>
+        </view>
+        <view class="name">{{item.groupTitle}}</view>
+        <view class="meta">订单号 {{item.orderNo}} · 可退金额 ¥{{item.amount.totalAmount}}</view>
+        <view class="leader-actions">
+          <view class="ship-btn" data-order-id="{{item.id}}" bindtap="shipReturn">录入退回物流</view>
+          <view class="ship-btn dark" data-order-id="{{item.id}}" data-amount="{{item.amount.totalAmount}}" bindtap="finishRefund">完成退款</view>
+        </view>
+      </view>
+    </block>
+  </block>
+
+  <block wx:else>
+    <view class="buyer-tabs">
+      <view class="buyer-tab {{buyerOrderTab==='all'?'on':''}}" data-tab="all" bindtap="switchBuyerTab">全部</view>
+      <view class="buyer-tab {{buyerOrderTab==='pending'?'on':''}}" data-tab="pending" bindtap="switchBuyerTab">待审核({{buyerTabCounts.pending}})</view>
+      <view class="buyer-tab {{buyerOrderTab==='confirmed'?'on':''}}" data-tab="confirmed" bindtap="switchBuyerTab">已确认({{buyerTabCounts.confirmed}})</view>
+      <view class="buyer-tab {{buyerOrderTab==='shipped'?'on':''}}" data-tab="shipped" bindtap="switchBuyerTab">已发货({{buyerTabCounts.shipped}})</view>
+      <view class="buyer-tab {{buyerOrderTab==='afterSale'?'on':''}}" data-tab="afterSale" bindtap="switchBuyerTab">售后({{buyerTabCounts.afterSale}})</view>
+    </view>
+    <view wx:if="{{!displayedOrders.length}}" class="card order">
+      <view class="name">暂无订单，先去市场选购。</view>
+    </view>
+    <block wx:for="{{displayedOrders}}" wx:key="id">
+      <view class="card order" data-order-id="{{item.id}}" bindtap="openDetail">
+        <view class="top">
+          <text class="merchant">{{item.leaderName}}</text>
+          <text class="status">{{item.statusLabel}}</text>
+        </view>
+        <view class="name">{{item.groupTitle}}</view>
+        <view class="meta">订单号 {{item.orderNo}} · 共 {{item.items.length}} 件</view>
+        <view class="price">{{item.amountLabel}}</view>
+      </view>
+    </block>
   </block>
 </view>
 <bottom-nav active="orders" />

@@ -1,17 +1,42 @@
 <view class="nav-wrap">
-  <view class="item {{active==='market'?'on':''}}" data-page="market" bindtap="go">
-    <text>市场</text>
-  </view>
-  <view class="item {{active==='cart'?'on':''}}" data-page="cart" bindtap="go">
-    <text>购物车</text>
-  </view>
-  <view class="publish" bindtap="publish">
-    <text>+</text>
-  </view>
-  <view class="item {{active==='orders'?'on':''}}" data-page="orders" bindtap="go">
-    <text>订单</text>
-  </view>
-  <view class="item {{active==='settings'?'on':''}}" data-page="settings" bindtap="go">
-    <text>设置</text>
-  </view>
+  <block wx:if="{{isLeader}}">
+    <view class="item leader {{active==='market'?'on':''}}" data-page="market" bindtap="go">
+      <view class="icon icon-market"></view>
+      <text class="label">市场</text>
+    </view>
+    <view class="item leader {{active==='cart'?'on':''}}" data-page="cart" bindtap="go">
+      <view class="icon icon-review"></view>
+      <text class="label">审核</text>
+    </view>
+    <view class="publish" bindtap="publishOrSearch">
+      <text>+</text>
+    </view>
+    <view class="item leader {{active==='orders'?'on':''}}" data-page="orders" bindtap="go">
+      <view class="icon icon-ship"></view>
+      <text class="label">发货</text>
+    </view>
+    <view class="item leader {{active==='settings'?'on':''}}" data-page="settings" bindtap="go">
+      <view class="icon icon-settings"></view>
+      <text class="label">设置</text>
+    </view>
+  </block>
+
+  <block wx:else>
+    <view class="item buyer {{active==='market'?'on':''}}" data-page="market" bindtap="go">
+      <view class="icon icon-market"></view>
+      <text class="label">市场</text>
+    </view>
+    <view class="item buyer {{active==='cart'?'on':''}}" data-page="cart" bindtap="go">
+      <view class="icon icon-cart"></view>
+      <text class="label">购物车</text>
+    </view>
+    <view class="item buyer {{active==='orders'?'on':''}}" data-page="orders" bindtap="go">
+      <view class="icon icon-order"></view>
+      <text class="label">订单</text>
+    </view>
+    <view class="item buyer {{active==='settings'?'on':''}}" data-page="settings" bindtap="go">
+      <view class="icon icon-settings"></view>
+      <text class="label">设置</text>
+    </view>
+  </block>
 </view>

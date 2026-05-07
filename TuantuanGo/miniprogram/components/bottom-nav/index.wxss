@@ -13,11 +13,165 @@
 }
 
 .item {
-  width: 120rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rpx;
   text-align: center;
   color: #8d716a;
   font-size: 22rpx;
   font-weight: 500;
+  line-height: 1.2;
+}
+.icon {
+  width: 30rpx;
+  height: 30rpx;
+  box-sizing: border-box;
+  border: 2rpx solid #8d716a;
+  border-radius: 8rpx;
+  position: relative;
+}
+
+.item.on .icon {
+  border-color: #ae3115;
+}
+
+.icon-market::before {
+  content: "";
+  position: absolute;
+  left: 6rpx;
+  right: 6rpx;
+  top: 7rpx;
+  height: 2rpx;
+  background: #8d716a;
+}
+
+.icon-market::after {
+  content: "";
+  position: absolute;
+  left: 8rpx;
+  right: 8rpx;
+  bottom: 6rpx;
+  height: 2rpx;
+  background: #8d716a;
+}
+
+.icon-cart::before {
+  content: "";
+  position: absolute;
+  left: 6rpx;
+  right: 6rpx;
+  top: 8rpx;
+  height: 2rpx;
+  background: #8d716a;
+}
+
+.icon-cart::after {
+  content: "";
+  position: absolute;
+  left: 9rpx;
+  right: 9rpx;
+  bottom: 6rpx;
+  height: 2rpx;
+  background: #8d716a;
+}
+
+.icon-order::before {
+  content: "";
+  position: absolute;
+  left: 7rpx;
+  right: 7rpx;
+  top: 8rpx;
+  height: 2rpx;
+  background: #8d716a;
+  box-shadow: 0 6rpx 0 #8d716a, 0 12rpx 0 #8d716a;
+}
+
+.icon-review::before {
+  content: "";
+  position: absolute;
+  left: 7rpx;
+  right: 7rpx;
+  top: 8rpx;
+  height: 2rpx;
+  background: #8d716a;
+  box-shadow: 0 7rpx 0 #8d716a;
+}
+
+.icon-review::after {
+  content: "";
+  position: absolute;
+  right: 6rpx;
+  bottom: 6rpx;
+  width: 8rpx;
+  height: 8rpx;
+  border-right: 2rpx solid #8d716a;
+  border-bottom: 2rpx solid #8d716a;
+  transform: rotate(45deg);
+}
+
+.icon-ship::before {
+  content: "";
+  position: absolute;
+  left: 6rpx;
+  right: 6rpx;
+  top: 9rpx;
+  height: 2rpx;
+  background: #8d716a;
+}
+
+.icon-ship::after {
+  content: "";
+  position: absolute;
+  left: 10rpx;
+  right: 10rpx;
+  bottom: 7rpx;
+  height: 2rpx;
+  background: #8d716a;
+}
+
+.icon-settings {
+  border-radius: 50%;
+}
+
+.icon-settings::before {
+  content: "";
+  position: absolute;
+  left: 10rpx;
+  top: 10rpx;
+  width: 6rpx;
+  height: 6rpx;
+  border-radius: 50%;
+  background: #8d716a;
+}
+
+.item.on .icon-market::before,
+.item.on .icon-market::after,
+.item.on .icon-cart::before,
+.item.on .icon-cart::after,
+.item.on .icon-order::before,
+.item.on .icon-review::before,
+.item.on .icon-ship::before,
+.item.on .icon-ship::after,
+.item.on .icon-settings::before {
+  background: #ae3115;
+}
+
+.item.on .icon-review::after {
+  border-right-color: #ae3115;
+  border-bottom-color: #ae3115;
+}
+.label {
+  font-size: 22rpx;
+  line-height: 1.2;
+}
+
+.item.buyer {
+  flex: 1;
+}
+
+.item.leader {
+  width: 120rpx;
 }
 
 .item.on {

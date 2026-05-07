@@ -1,18 +1,22 @@
 const { groups } = require("../../stores/mock-data");
-const { getCart, clearCart } = require("../../stores/cart-store");
+const { getCart, clearGroupCart } = require("../../stores/cart-store");
 const { calcOrderAmount } = require("../../services/pricing");
 const { createOrder } = require("../../stores/order-store");
 
 Page({
   data: {
+    groupId: "",
     cart: { groupId: "", items: [] },
     group: null,
     amount: null,
     remark: "",
     proofName: ""
   },
+  onLoad(query) {
+    this.setData({ groupId: query && query.groupId ? query.groupId : "" });
+  },
   onShow() {
-    const cart = getCart();
+    const cart = getCart(this.data.groupId);
     const group = groups.find((x) => x.id === cart.groupId) || null;
     const amount = group
       ? calcOrderAmount(cart.items, {
@@ -53,9 +57,25 @@ Page({
       leaderName: this.data.group ? this.data.group.leaderName : "",
       items: this.data.cart.items,
       amount: this.data.amount,
-      remark: this.data.remark
+      remark: this.data.remark,
+      logisticsCompany: "顺丰速运",
+      trackingNo: `SF${String(Date.now()).slice(-10)}`,
+      shipmentStatus: "pending",
+      paymentReviewStatus: "pending_review",
+      trackingEvents: [
+        { time: "待发货", text: "团长审核通过后将更新物流轨迹", eventAt: Date.now() }
+      ],
+      mergeShipment: {
+        status: "not_applied",
+        relatedOrderNos: []
+      },
+      transferRecord: {
+        status: "none",
+        fromUser: "团团用户_1024",
+        toUser: ""
+      }
     });
-    clearCart();
+    clearGroupCart(this.data.groupId || this.data.cart.groupId);
     wx.showModal({
       title: "提交成功",
       content: "订单已进入待团长审核状态。",

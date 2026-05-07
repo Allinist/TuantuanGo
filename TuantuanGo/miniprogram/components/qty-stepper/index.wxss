@@ -1,0 +1,26 @@
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  background: #fff3ee;
+  border-radius: 14rpx;
+  overflow: hidden;
+}
+
+.step-btn {
+  width: 48rpx;
+  height: 48rpx;
+  line-height: 48rpx;
+  text-align: center;
+  color: #ae3115;
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+.step-input {
+  width: 72rpx;
+  height: 48rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #3d2d29;
+  background: #ffffff;
+}

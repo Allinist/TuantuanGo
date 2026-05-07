@@ -1,58 +1,106 @@
-const KEY = "ttg_cart_v1";
+const KEY = "ttg_cart_v2";
+const MAX_GROUP_ORDERS = 10;
 
-function getCart() {
-  return wx.getStorageSync(KEY) || { groupId: "", items: [] };
+function normalize(raw) {
+  if (raw && typeof raw === "object" && raw.groupCarts && typeof raw.groupCarts === "object") {
+    return raw;
+  }
+  if (raw && typeof raw === "object" && raw.groupId && Array.isArray(raw.items)) {
+    const groupCarts = {};
+    if (raw.groupId) groupCarts[raw.groupId] = raw.items;
+    return { groupCarts };
+  }
+  return { groupCarts: {} };
 }
 
-function setCart(cart) {
-  wx.setStorageSync(KEY, cart);
+function getCartStore() {
+  return normalize(wx.getStorageSync(KEY));
+}
+
+function setCartStore(store) {
+  wx.setStorageSync(KEY, normalize(store));
+}
+
+function getCart(groupId) {
+  const store = getCartStore();
+  if (groupId) {
+    return { groupId, items: store.groupCarts[groupId] || [] };
+  }
+  const groupIds = Object.keys(store.groupCarts);
+  const first = groupIds[0] || "";
+  return { groupId: first, items: first ? store.groupCarts[first] : [] };
+}
+
+function getAllGroupCarts() {
+  const store = getCartStore();
+  return Object.keys(store.groupCarts).map((groupId) => ({
+    groupId,
+    items: store.groupCarts[groupId] || []
+  }));
 }
 
 function clearCart() {
-  setCart({ groupId: "", items: [] });
+  setCartStore({ groupCarts: {} });
+}
+
+function clearGroupCart(groupId) {
+  const store = getCartStore();
+  delete store.groupCarts[groupId];
+  setCartStore(store);
 }
 
 function addItem(groupId, product) {
-  const cart = getCart();
-  if (cart.groupId && cart.groupId !== groupId) {
-    return { ok: false, message: "购物车按团隔离，请先提交或清空当前购物车。" };
+  const store = getCartStore();
+  const groupIds = Object.keys(store.groupCarts);
+  const isNewGroup = !store.groupCarts[groupId];
+  if (isNewGroup && groupIds.length >= MAX_GROUP_ORDERS) {
+    return { ok: false, message: "购物车已满，请先下单" };
   }
-  cart.groupId = groupId;
-  const idx = cart.items.findIndex((x) => x.productId === product.id);
+  const items = store.groupCarts[groupId] || [];
+  const idx = items.findIndex((x) => x.productId === product.id);
   if (idx >= 0) {
-    cart.items[idx].quantity += 1;
+    items[idx].quantity += 1;
   } else {
-    cart.items.push({
+    items.push({
       productId: product.id,
       name: product.name,
       unitCode: product.unitCode || "",
+      presaleDate: product.presaleDate || "",
       ruleType: product.mode || "optional",
       price: product.price,
       quantity: 1
     });
   }
-  setCart(cart);
-  return { ok: true, cart };
+  store.groupCarts[groupId] = items;
+  setCartStore(store);
+  return { ok: true, cart: { groupId, items } };
 }
 
-function updateQuantity(productId, quantity) {
-  const cart = getCart();
-  const idx = cart.items.findIndex((x) => x.productId === productId);
-  if (idx < 0) return cart;
+function updateQuantity(groupId, productId, quantity) {
+  const store = getCartStore();
+  const items = store.groupCarts[groupId] || [];
+  const idx = items.findIndex((x) => x.productId === productId);
+  if (idx < 0) return { groupId, items };
   if (quantity <= 0) {
-    cart.items.splice(idx, 1);
+    items.splice(idx, 1);
   } else {
-    cart.items[idx].quantity = quantity;
+    items[idx].quantity = quantity;
   }
-  if (!cart.items.length) cart.groupId = "";
-  setCart(cart);
-  return cart;
+  if (!items.length) {
+    delete store.groupCarts[groupId];
+  } else {
+    store.groupCarts[groupId] = items;
+  }
+  setCartStore(store);
+  return { groupId, items: store.groupCarts[groupId] || [] };
 }
 
 module.exports = {
+  MAX_GROUP_ORDERS,
   getCart,
-  setCart,
+  getAllGroupCarts,
   clearCart,
+  clearGroupCart,
   addItem,
   updateQuantity
 };

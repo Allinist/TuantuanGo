@@ -1,0 +1,5 @@
+<view class="stepper">
+  <view class="step-btn" bindtap="minus">-</view>
+  <input class="step-input" type="number" value="{{value}}" bindinput="onInput" />
+  <view class="step-btn" bindtap="plus">+</view>
+</view>

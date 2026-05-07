@@ -6,7 +6,7 @@
     <view class="k">商品明细</view>
     <block wx:for="{{cart.items}}" wx:key="productId">
       <view class="line">
-        <text>{{item.name}} x {{item.quantity}}</text>
+        <text>{{item.name}} x {{item.quantity}} {{item.presaleDate ? ('(预售 ' + item.presaleDate + ')') : '(现货)'}} </text>
         <text>¥{{item.price * item.quantity}}</text>
       </view>
     </block>
