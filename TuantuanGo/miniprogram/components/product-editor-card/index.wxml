@@ -23,7 +23,7 @@
     </block>
   </view>
 
-  <view class="upload upload-image" bindtap="chooseImage">添加商品图（最多4张，已选{{(product.images||[]).length}}张）</view>
+  <view class="upload upload-image" bindtap="chooseImage">添加商品图（最多4张，已选{{product.images.length}}张）</view>
   <scroll-view wx:if="{{product.images && product.images.length}}" class="images-row" scroll-x="true" enable-flex="true" show-scrollbar="false">
     <view class="images-inner">
       <block wx:for="{{product.images}}" wx:key="*this">
