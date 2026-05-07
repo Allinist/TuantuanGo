@@ -1,19 +1,15 @@
 <view class="safe-bottom page">
-  <view class="search card">
-    <input class="search-input" placeholder="搜索商品 / 团长 / 分类" value="{{keyword}}" bindinput="onKeywordInput" bindconfirm="onSearchTap" confirm-type="search" />
-    <text class="search-btn" bindtap="onSearchTap">搜索</text>
-    <text wx:if="{{keyword}}" class="clear" bindtap="clearKeyword">清除</text>
-  </view>
+  <search-bar value="{{keyword}}" placeholder="搜索商品 / 团长 / 分类" bindinput="onKeywordInput" bindsearch="onSearchTap" bindclear="clearKeyword" />
 
   <view class="filter-row">
     <view class="filter-title">购买方式</view>
     <scroll-view class="filters-scroll" scroll-x="true" enable-flex="true" show-scrollbar="false">
       <view class="filters">
-      <text class="chip {{purchaseFilter==='all' ? 'on' : ''}}" data-filter="all" bindtap="switchPurchaseFilter">全部</text>
-      <text class="chip {{purchaseFilter==='direct' ? 'on' : ''}}" data-filter="direct" bindtap="switchPurchaseFilter">直出</text>
-      <text class="chip {{purchaseFilter==='bundle' ? 'on' : ''}}" data-filter="bundle" bindtap="switchPurchaseFilter">捆出</text>
-      <text class="chip {{purchaseFilter==='group' ? 'on' : ''}}" data-filter="group" bindtap="switchPurchaseFilter">拼团</text>
-      <text class="chip {{purchaseFilter==='optional' ? 'on' : ''}}" data-filter="optional" bindtap="switchPurchaseFilter">自选</text>
+        <text class="chip {{purchaseFilter==='all' ? 'on' : ''}}" data-filter="all" bindtap="switchPurchaseFilter">全部</text>
+        <text class="chip {{purchaseFilter==='direct' ? 'on' : ''}}" data-filter="direct" bindtap="switchPurchaseFilter">直出</text>
+        <text class="chip {{purchaseFilter==='bundle' ? 'on' : ''}}" data-filter="bundle" bindtap="switchPurchaseFilter">捆出</text>
+        <text class="chip {{purchaseFilter==='group' ? 'on' : ''}}" data-filter="group" bindtap="switchPurchaseFilter">拼团</text>
+        <text class="chip {{purchaseFilter==='optional' ? 'on' : ''}}" data-filter="optional" bindtap="switchPurchaseFilter">自选</text>
       </view>
     </scroll-view>
   </view>
@@ -33,8 +29,6 @@
     <text class="switch-item {{leaderView === 'mine' ? 'on' : ''}}" data-mode="mine" bindtap="switchLeaderView">我的</text>
     <text class="switch-item {{leaderView === 'all' ? 'on' : ''}}" data-mode="all" bindtap="switchLeaderView">市场</text>
   </view>
-
-  <view wx:if="{{!isLeader}}" class="section-title">开团市场</view>
 
   <block wx:for="{{filteredGroups}}" wx:key="id">
     <view class="card group" data-group-id="{{item.id}}" bindtap="openGroup">

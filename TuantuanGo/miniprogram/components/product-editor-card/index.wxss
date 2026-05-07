@@ -1,0 +1,59 @@
+.product-edit {
+  margin-top: 14rpx;
+  background: #fff8f5;
+  border: 1rpx solid #f3d7cf;
+  border-radius: 14rpx;
+  padding: 14rpx;
+}
+.role-tag {
+  display: inline-block;
+  margin-bottom: 8rpx;
+  padding: 6rpx 12rpx;
+  border-radius: 999rpx;
+  background: #ffe9e5;
+  color: #ae3115;
+  font-size: 20rpx;
+}
+.label { font-size: 24rpx; color: #8d716a; margin-top: 10rpx; margin-bottom: 8rpx; }
+.input, .upload { background: #fff0ed; border-radius: 16rpx; padding: 20rpx; color: #59413c; }
+.input-field {
+  background: #fff0ed;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  color: #59413c;
+  font-size: 26rpx;
+}
+.line-two { display: flex; gap: 12rpx; }
+.half { flex: 1; }
+.presale-picker { margin-top: 10rpx; display: block; }
+.presale-input { min-height: 76rpx; display: flex; align-items: center; box-sizing: border-box; }
+.pool-row { display: flex; flex-wrap: wrap; gap: 8rpx; margin-top: 10rpx; }
+.pool-chip {
+  padding: 6rpx 10rpx;
+  border-radius: 999rpx;
+  background: #fff0ed;
+  color: #8d716a;
+  font-size: 20rpx;
+}
+.pool-chip.on { background: #ff6b4a; color: #fff; }
+.upload-image { margin-top: 12rpx; }
+.images-row { margin-top: 10rpx; white-space: nowrap; }
+.images-inner { display: inline-flex; gap: 12rpx; }
+.thumb-wrap { position: relative; width: 160rpx; height: 160rpx; }
+.product-preview { width: 160rpx; height: 160rpx; border-radius: 12rpx; }
+.thumb-del {
+  position: absolute;
+  top: -8rpx;
+  right: -8rpx;
+  width: 34rpx;
+  height: 34rpx;
+  border-radius: 17rpx;
+  background: #261815;
+  color: #fff;
+  text-align: center;
+  line-height: 34rpx;
+  font-size: 22rpx;
+}
+.rule-section { margin-top: 12rpx; }
+.rule-title { font-size: 22rpx; color: #8d716a; margin-bottom: 8rpx; }
+.remove-product { margin-top: 10rpx; text-align: right; font-size: 22rpx; color: #ae3115; }

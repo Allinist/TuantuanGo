@@ -1,12 +1,15 @@
 .page { padding: 24rpx; }
 .hint { color: #8d716a; font-size: 22rpx; margin-bottom: 16rpx; }
-.item { padding: 24rpx; margin-bottom: 16rpx; }
+.item { padding: 16rpx; margin-bottom: 16rpx; display: flex; gap: 14rpx; align-items: center; }
+.content { flex: 1; min-width: 0; }
+.cover { width: 120rpx; height: 120rpx; border-radius: 12rpx; background: #f2f2f2; }
 .bundle-title { font-size: 24rpx; color: #59413c; margin: 8rpx 0 12rpx; }
 .bundle-item {
-  padding: 24rpx; margin-bottom: 14rpx; display: flex; align-items: center; justify-content: space-between;
+  padding: 16rpx; margin-bottom: 14rpx; display: flex; gap: 14rpx; align-items: center;
   border: 2rpx solid transparent;
 }
 .bundle-item.selected { border-color: #ff6b4a; background: #fff0ed; }
+.bundle-item .price { margin-left: auto; }
 .name { font-size: 30rpx; font-weight: 600; margin-bottom: 8rpx; }
 .meta { color: #8d716a; font-size: 22rpx; margin-bottom: 14rpx; }
 .row { display: flex; align-items: center; justify-content: space-between; }

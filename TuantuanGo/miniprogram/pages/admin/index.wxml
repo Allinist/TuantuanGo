@@ -1,0 +1,40 @@
+<view class="page">
+  <view class="tabs">
+    <text class="tab {{tab==='apply'?'on':''}}" data-tab="apply" bindtap="switchTab">准入审核</text>
+    <text class="tab {{tab==='group'?'on':''}}" data-tab="group" bindtap="switchTab">内容封禁</text>
+    <text class="tab {{tab==='user'?'on':''}}" data-tab="user" bindtap="switchTab">用户封禁</text>
+  </view>
+
+  <view wx:if="{{tab==='apply'}}" class="card panel">
+    <block wx:for="{{applications}}" wx:key="id">
+      <view class="item">
+        <view class="line">{{item.name || '-'}} {{item.phone || ''}}</view>
+        <view class="sub">{{item.userId}} · {{item.reason || '无说明'}}</view>
+        <view class="ops" wx:if="{{item.status==='pending'}}">
+          <text class="op pass" data-id="{{item.id}}" bindtap="approve">通过</text>
+          <text class="op reject" data-id="{{item.id}}" bindtap="reject">拒绝</text>
+        </view>
+        <view class="state" wx:else>状态：{{item.status}}</view>
+      </view>
+    </block>
+  </view>
+
+  <view wx:if="{{tab==='group'}}" class="card panel">
+    <block wx:for="{{groups}}" wx:key="id">
+      <view class="item">
+        <view class="line">{{item.title}}</view>
+        <view class="sub">{{item.id}}</view>
+        <text class="op {{item.banned ? 'reject' : 'pass'}}" data-id="{{item.id}}" bindtap="toggleGroup">{{item.banned ? '解除封禁' : '封禁内容'}}</text>
+      </view>
+    </block>
+  </view>
+
+  <view wx:if="{{tab==='user'}}" class="card panel">
+    <block wx:for="{{userIds}}" wx:key="id">
+      <view class="item">
+        <view class="line">{{item.id}}</view>
+        <text class="op {{item.banned ? 'reject' : 'pass'}}" data-id="{{item.id}}" bindtap="toggleUser">{{item.banned ? '解除封禁' : '封禁用户'}}</text>
+      </view>
+    </block>
+  </view>
+</view>

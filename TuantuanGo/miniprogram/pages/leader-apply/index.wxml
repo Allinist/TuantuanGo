@@ -1,7 +1,13 @@
 <view class="page">
   <view class="card box">
-    <view class="title">当前未开通团长权限</view>
-    <view class="desc">根据文档，中间 + 入口需分流到团长身份申请。开通后可发布团购、上架商品、配置规则和收款二维码。</view>
-    <view class="btn" bindtap="applyNow">立即申请团长</view>
+    <view class="title">申请团长/卖家</view>
+    <view class="desc">仅管理员审核通过后可切换为团长/卖家身份。</view>
+    <input class="input" placeholder="姓名" value="{{name}}" bindinput="onInputName" />
+    <input class="input" placeholder="电话号码" value="{{phone}}" bindinput="onInputPhone" />
+    <textarea class="area" placeholder="申请说明" value="{{reason}}" bindinput="onInputReason"></textarea>
+    <view class="btn" bindtap="submitApply">提交申请</view>
+  </view>
+  <view wx:if="{{latest}}" class="card box">
+    <view class="desc">最近申请状态：{{latest.status}}</view>
   </view>
 </view>

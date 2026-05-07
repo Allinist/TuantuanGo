@@ -1,0 +1,17 @@
+.page { padding: 24rpx; }
+.form, .list { padding: 24rpx; margin-bottom: 16rpx; }
+.title { font-size: 30rpx; font-weight: 700; margin-bottom: 12rpx; }
+.input, .area {
+  margin-top: 12rpx;
+  background: #fff0ed;
+  border-radius: 14rpx;
+  padding: 16rpx;
+  font-size: 26rpx;
+}
+.area { min-height: 130rpx; }
+.btn { margin-top: 14rpx; padding: 18rpx; border-radius: 14rpx; text-align: center; color: #fff; background: #ff6b4a; }
+.item { border-bottom: 1rpx solid #f2ded9; padding: 14rpx 0; position: relative; }
+.item:last-child { border-bottom: none; }
+.line { font-size: 26rpx; color: #2f2523; }
+.sub { font-size: 22rpx; color: #8d716a; margin-top: 6rpx; padding-right: 80rpx; }
+.del { position: absolute; right: 0; top: 14rpx; color: #ae3115; font-size: 24rpx; }

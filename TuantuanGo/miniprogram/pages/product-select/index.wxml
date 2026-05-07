@@ -4,30 +4,39 @@
 
   <block wx:if="{{group.saleRuleType === 'bundle_min_amount'}}">
     <view class="card item">
-      <view class="name">{{mainProduct.name}}</view>
-      <view class="meta">主商品 · ¥{{mainProduct.price}} · 库存 {{mainProduct.stock}}</view>
+      <image class="cover" src="{{mainProduct.coverImage}}" mode="aspectFill"></image>
+      <view class="content">
+        <view class="name">{{mainProduct.name}}</view>
+        <view class="meta">主商品 · ¥{{mainProduct.price}} · 库存 {{mainProduct.stock}}</view>
+      </view>
     </view>
     <view class="bundle-title">请选择被捆商品（总额需 ≥ ¥{{group.bundleRequiredAmount}}）</view>
     <block wx:for="{{bundleProducts}}" wx:key="id">
       <view class="card bundle-item {{selectedBundleIds.indexOf(item.id) > -1 ? 'selected' : ''}}" data-product-id="{{item.id}}" bindtap="toggleBundle">
-        <view>
+        <image class="cover" src="{{item.coverImage}}" mode="aspectFill"></image>
+        <view class="content">
           <view class="name">{{item.name}}</view>
-          <view class="meta">编号 {{item.unitCode}} · 库存 {{item.stock}} · {{item.presaleDate ? ('预售日期 ' + item.presaleDate) : '现货'}}</view>
+          <view class="meta">编号 {{item.unitCode}} · 库存 {{item.stock}} · {{item.presaleDate ? ('预售 ' + item.presaleDate) : '现货'}}</view>
         </view>
         <text class="price">¥{{item.price}}</text>
       </view>
     </block>
     <view class="go" bindtap="addBundlePack">加入捆出组合</view>
   </block>
+
   <block wx:elif="{{group.saleRuleType === 'bundle_fixed_items'}}">
     <view class="card item">
-      <view class="name">{{mainProduct.name}}</view>
-      <view class="meta">主商品 · ¥{{mainProduct.price}} · 库存 {{mainProduct.stock}}</view>
+      <image class="cover" src="{{mainProduct.coverImage}}" mode="aspectFill"></image>
+      <view class="content">
+        <view class="name">{{mainProduct.name}}</view>
+        <view class="meta">主商品 · ¥{{mainProduct.price}} · 库存 {{mainProduct.stock}}</view>
+      </view>
     </view>
     <view class="bundle-title">固定捆物品（不可替换）</view>
     <block wx:for="{{fixedBundleProducts}}" wx:key="id">
       <view class="card bundle-item fixed">
-        <view>
+        <image class="cover" src="{{item.coverImage}}" mode="aspectFill"></image>
+        <view class="content">
           <view class="name">{{item.name}}</view>
           <view class="meta">编号 {{item.unitCode}} · 固定数量 x{{item.fixedQty || 1}}</view>
         </view>
@@ -40,11 +49,14 @@
   <block wx:else>
     <block wx:for="{{products}}" wx:key="id">
       <view class="card item">
-        <view class="name">{{item.name}}</view>
-        <view class="meta">编号 {{item.unitCode}} · 库存 {{item.stock}} · {{item.presaleDate ? ('预售日期 ' + item.presaleDate) : '现货'}}</view>
-        <view class="row">
-          <text class="price">¥{{item.price}}</text>
-          <qty-stepper value="{{quantityMap[item.id] || 0}}" product-id="{{item.id}}" group-id="{{group.id}}" bindchange="onQtyChange" />
+        <image class="cover" src="{{item.coverImage}}" mode="aspectFill"></image>
+        <view class="content">
+          <view class="name">{{item.name}}</view>
+          <view class="meta">编号 {{item.unitCode}} · 库存 {{item.stock}} · {{item.presaleDate ? ('预售 ' + item.presaleDate) : '现货'}}</view>
+          <view class="row">
+            <text class="price">¥{{item.price}}</text>
+            <qty-stepper value="{{quantityMap[item.id] || 0}}" product-id="{{item.id}}" group-id="{{group.id}}" bindchange="onQtyChange" />
+          </view>
         </view>
       </view>
     </block>

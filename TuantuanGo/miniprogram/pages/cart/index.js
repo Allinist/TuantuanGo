@@ -49,6 +49,7 @@ Page({
   onShow() {
     const leader = isLeader();
     this.setData({ isLeader: leader });
+    wx.setNavigationBarTitle({ title: leader ? "订单审核" : "购物车" });
     if (leader) {
       this.refreshLeader();
       return;

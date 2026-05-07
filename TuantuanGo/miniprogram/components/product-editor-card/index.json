@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "rule-triple-input": "/components/rule-triple-input/index"
+  }
+}

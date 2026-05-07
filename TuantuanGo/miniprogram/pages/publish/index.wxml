@@ -1,8 +1,8 @@
 <view class="page">
-  <view class="section-title">{{editGroupId ? '编辑已上架团购' : '发布团购'}}</view>
+  <view class="section-title">{{editGroupId ? '编辑团购' : '发布团购'}}</view>
   <view class="card form">
     <view class="label">团购名称</view>
-    <input class="input-field" placeholder="例如：初音未来纪念手办团" value="{{groupTitle}}" bindinput="onTitleInput" />
+    <input class="input-field" placeholder="例如：夏日谷子团" value="{{groupTitle}}" bindinput="onTitleInput" />
 
     <view class="label">团购头图</view>
     <view class="upload" bindtap="chooseGroupCover">{{groupCover ? '已选择头图，点击更换' : '点击添加头图'}}</view>
@@ -15,67 +15,74 @@
       <text class="opt {{saleRuleType==='group_buy' ? 'on' : ''}}" data-mode="group_buy" bindtap="switchMode">拼团</text>
       <text class="opt {{saleRuleType==='optional' ? 'on' : ''}}" data-mode="optional" bindtap="switchMode">自选</text>
     </view>
-    <view wx:if="{{saleRuleType==='bundle_min_amount'}}">
-      <view class="label">最低被捆金额</view>
-      <input class="input-field" type="number" value="{{bundleRequiredAmount}}" bindinput="onBundleAmountInput" />
+
+    <view class="section">物品类型</view>
+    <view class="options">
+      <text class="opt {{itemType==='goods' ? 'on' : ''}}" data-type="goods" bindtap="switchItemType">谷子</text>
+      <text class="opt {{itemType==='cultural' ? 'on' : ''}}" data-type="cultural" bindtap="switchItemType">文创</text>
     </view>
+
+    <view class="label">自动签收（天）</view>
+    <input class="input-field" type="number" value="{{autoCompleteDays}}" bindinput="onAutoCompleteDaysInput" />
+    <view class="policy-note">可选 7-28 天</view>
+
     <view wx:if="{{saleRuleType==='group_buy'}}">
       <view class="label">拼团类型</view>
       <view class="options">
         <text class="opt {{groupType==='single' ? 'on' : ''}}" data-type="single" bindtap="switchGroupType">单人团</text>
         <text class="opt {{groupType==='multi' ? 'on' : ''}}" data-type="multi" bindtap="switchGroupType">多人团</text>
       </view>
-      <view class="label">发车条件</view>
-      <input class="input-field" value="{{departureCondition}}" bindinput="onDepartureInput" />
+      <view class="label">整单拼团规则（留空不启用）</view>
+      <rule-triple-input value="{{groupRuleInput}}" bindchange="onGroupRuleInputChange" />
+      <view class="batch-btn light" bindtap="applyGroupRuleToAll">应用到全部商品</view>
     </view>
 
     <view class="section">预售规则</view>
-    <view class="label">批量预售日期</view>
-    <picker mode="date" value="{{batchPresaleDate}}" bindchange="onBatchDateChange">
-      <view class="input">{{batchPresaleDate || '选择日期（应用到全部商品）'}}</view>
+    <picker class="presale-picker" mode="date" value="{{batchPresaleDate}}" bindchange="onBatchDateChange">
+      <view class="input presale-input">{{batchPresaleDate || '选择批量预售日期'}}</view>
     </picker>
-    <view class="batch-btn" bindtap="applyBatchPresale">批量应用到全部商品</view>
-
-    <view class="label">单个商品预售日期</view>
-    <block wx:for="{{products}}" wx:key="id" wx:for-item="productItem">
-      <view class="product-row">
-        <text class="product-name">{{productItem.name}}</text>
-        <picker mode="date" value="{{productItem.presaleDate}}" data-id="{{productItem.id}}" bindchange="onSingleDateChange">
-          <view class="single-date">{{productItem.presaleDate || '设置日期'}}</view>
-        </picker>
-      </view>
-    </block>
+    <view class="batch-btn" bindtap="applyBatchPresale">应用到全部商品</view>
 
     <view class="section">发布商品</view>
-    <block wx:for="{{products}}" wx:key="id" wx:for-item="productItem">
-      <view class="product-edit">
-        <view class="label">商品名称</view>
-        <input class="input-field" data-id="{{productItem.id}}" value="{{productItem.name}}" bindinput="onProductNameInput" />
-        <view class="line-two">
-          <view class="half">
-            <view class="label">价格</view>
-            <input class="input-field" type="number" data-id="{{productItem.id}}" value="{{productItem.price}}" bindinput="onProductPriceInput" />
-          </view>
-          <view class="half">
-            <view class="label">库存</view>
-            <input class="input-field" type="number" data-id="{{productItem.id}}" value="{{productItem.stock}}" bindinput="onProductStockInput" />
-          </view>
+    <block wx:if="{{saleRuleType==='bundle_min_amount'}}">
+      <view class="bundle-block">
+        <view class="bundle-title">主品</view>
+        <view class="bundle-action-row">
+          <view class="batch-btn light inline-btn" data-bind-pool="main" data-role="main" bindtap="addProductFromAll">商品池</view>
+          <view class="batch-btn light inline-btn" data-pool="main" data-role="main" bindtap="addProductFromPool">主品池</view>
         </view>
-        <view class="upload" data-id="{{productItem.id}}" bindtap="chooseProductImage">添加商品图（最多4张，已{{productItem.images.length || 0}}张）</view>
-        <scroll-view wx:if="{{productItem.images.length}}" class="images-row" scroll-x="true" enable-flex="true" show-scrollbar="false">
-          <view class="images-inner">
-            <block wx:for="{{productItem.images}}" wx:key="*this" wx:for-item="img" wx:for-index="imgIdx">
-              <view class="thumb-wrap">
-                <image class="product-preview" src="{{img}}" mode="aspectFill"></image>
-                <view class="thumb-del" data-id="{{productItem.id}}" data-idx="{{imgIdx}}" bindtap="removeProductImage">×</view>
-              </view>
-            </block>
-          </view>
-        </scroll-view>
-        <view class="remove-product" data-id="{{productItem.id}}" bindtap="removeProduct">删除该商品</view>
+        <view class="batch-btn inline-full" bindtap="asyncAddToMainPoolAndUse">新增主品（自动绑定）</view>
+      </view>
+      <view class="bundle-block">
+        <view class="bundle-title">捆物</view>
+        <view class="bundle-action-row">
+          <view class="batch-btn light inline-btn" data-bind-pool="bundle" data-role="bundle" bindtap="addProductFromAll">商品池</view>
+          <view class="batch-btn light inline-btn" data-pool="bundle" data-role="bundle" bindtap="addProductFromPool">捆物池</view>
+        </view>
+        <view class="batch-btn inline-full" data-role="bundle" bindtap="addProductWithRole">新增捆物</view>
       </view>
     </block>
-    <view class="batch-btn" bindtap="addProduct">新增商品</view>
+
+    <block wx:else>
+      <view class="bundle-action-row">
+        <view class="batch-btn light inline-btn" data-bind-pool="{{saleRuleType==='group_buy' ? 'group' : 'direct'}}" bindtap="addProductFromAll">商品池</view>
+        <view class="batch-btn light inline-btn" data-pool="{{saleRuleType==='group_buy' ? 'group' : 'direct'}}" bindtap="addProductFromPool">对应池</view>
+      </view>
+      <view class="batch-btn inline-full" data-bind-pool="{{saleRuleType==='group_buy' ? 'group' : 'direct'}}" bindtap="asyncAddToBindPoolAndUse">新增并自动绑定</view>
+    </block>
+
+    <block wx:for="{{products}}" wx:key="id" wx:for-item="productItem">
+      <product-editor-card
+        data-id="{{productItem.id}}"
+        product="{{productItem}}"
+        showRoleTag="{{saleRuleType==='bundle_min_amount'}}"
+        showPresale="{{true}}"
+        showRule="{{saleRuleType==='group_buy'}}"
+        canRemove="{{true}}"
+        bindchange="onEditorChange"
+        bindremove="onEditorRemove"
+      />
+    </block>
   </view>
-  <view class="submit" bindtap="submitPublish">{{editGroupId ? '保存编辑' : '确认并发起团购'}}</view>
+  <view class="submit" bindtap="submitPublish">{{editGroupId ? '保存编辑' : '确认并发布团购'}}</view>
 </view>

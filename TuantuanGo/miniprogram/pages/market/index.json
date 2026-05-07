@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "市场"
+  "navigationBarTitleText": "市场",
+  "usingComponents": {
+    "search-bar": "/components/search-bar/index"
+  }
 }

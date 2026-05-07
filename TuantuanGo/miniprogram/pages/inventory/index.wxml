@@ -1,0 +1,79 @@
+<view class="page safe-bottom">
+  <view class="card panel hero">
+    <view class="title-row">
+      <view class="title">库存管理</view>
+      <view class="badge">{{activePool==='all' ? '库存池' : '绑定池'}}</view>
+    </view>
+
+    <view class="pool-tabs">
+      <text class="pool-tab {{activePool==='all'?'on':''}}" data-key="all" bindtap="switchPool">库存池 {{poolCount.all}}</text>
+      <text class="pool-tab {{activePool==='direct'?'on':''}}" data-key="direct" bindtap="switchPool">直出 {{poolCount.direct}}</text>
+      <text class="pool-tab {{activePool==='main'?'on':''}}" data-key="main" bindtap="switchPool">主品 {{poolCount.main}}</text>
+      <text class="pool-tab {{activePool==='bundle'?'on':''}}" data-key="bundle" bindtap="switchPool">捆物 {{poolCount.bundle}}</text>
+      <text class="pool-tab {{activePool==='group'?'on':''}}" data-key="group" bindtap="switchPool">拼团 {{poolCount.group}}</text>
+    </view>
+
+    <search-bar
+      value="{{keyword}}"
+      placeholder="搜索商品名"
+      bindinput="onKeywordInput"
+      bindsearch="onSearchTap"
+      bindclear="clearKeyword"
+    />
+
+    <view class="sort-row">
+      <text class="sort-btn {{sortKey==='updated_desc'?'on':''}}" data-key="updated_desc" bindtap="switchSort">最近更新</text>
+      <text class="sort-btn {{sortKey==='name_asc'?'on':''}}" data-key="name_asc" bindtap="switchSort">名称</text>
+      <text class="sort-btn {{sortKey==='stock_desc'?'on':''}}" data-key="stock_desc" bindtap="switchSort">库存高低</text>
+    </view>
+  </view>
+
+  <view wx:if="{{activePool==='all'}}" class="card edit-box">
+    <view class="label">{{editId ? '编辑商品' : '新增商品'}}</view>
+    <product-editor-card
+      product="{{form}}"
+      showPoolSelector="{{true}}"
+      poolSelection="{{formPools}}"
+      poolOptions="{{poolOptions}}"
+      showPresale="{{false}}"
+      showRule="{{false}}"
+      canRemove="{{false}}"
+      bindchange="onEditorFormChange"
+      bindpoolchange="onEditorFormPoolChange"
+    />
+    <view class="row">
+      <view class="btn" bindtap="saveProduct">{{editId ? '保存编辑' : '新增商品'}}</view>
+      <view wx:if="{{editId}}" class="btn light" bindtap="cancelEdit">取消</view>
+    </view>
+  </view>
+
+  <view wx:if="{{activePool!=='all'}}" class="card tip-card">
+    <text class="tip-text">当前为绑定池视图，可搜索并取消/恢复池绑定。</text>
+  </view>
+
+  <block wx:for="{{products}}" wx:key="id" wx:for-item="productItem">
+    <view class="card item">
+      <view class="main">
+        <view class="item-title">{{productItem.name}}</view>
+        <view class="item-sub">¥{{productItem.price}} 库存{{productItem.stock}} {{productItem.unmade ? '（尚未制作）' : ''}}</view>
+        <view class="bind-row">
+          <text class="tag {{productItem.pools.indexOf('direct')>-1?'on':''}}" data-id="{{productItem.id}}" data-pool="direct" bindtap="togglePoolTag">直出池</text>
+          <text class="tag {{productItem.pools.indexOf('main')>-1?'on':''}}" data-id="{{productItem.id}}" data-pool="main" bindtap="togglePoolTag">主品池</text>
+          <text class="tag {{productItem.pools.indexOf('bundle')>-1?'on':''}}" data-id="{{productItem.id}}" data-pool="bundle" bindtap="togglePoolTag">捆物池</text>
+          <text class="tag {{productItem.pools.indexOf('group')>-1?'on':''}}" data-id="{{productItem.id}}" data-pool="group" bindtap="togglePoolTag">拼团池</text>
+        </view>
+        <scroll-view wx:if="{{productItem.images && productItem.images.length}}" class="images-row" scroll-x="true" enable-flex="true" show-scrollbar="false">
+          <view class="images-inner">
+            <block wx:for="{{productItem.images}}" wx:key="*this" wx:for-item="imgItem">
+              <image class="product-preview" src="{{imgItem}}" data-id="{{productItem.id}}" data-idx="{{index}}" bindtap="previewImage" mode="aspectFill"></image>
+            </block>
+          </view>
+        </scroll-view>
+      </view>
+      <view wx:if="{{activePool==='all'}}" class="actions">
+        <text class="action" data-id="{{productItem.id}}" bindtap="startEdit">编辑</text>
+        <text class="action" data-id="{{productItem.id}}" bindtap="deleteProduct">删除</text>
+      </view>
+    </view>
+  </block>
+</view>

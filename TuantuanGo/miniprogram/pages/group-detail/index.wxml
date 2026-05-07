@@ -1,33 +1,31 @@
 <view class="safe-bottom page">
   <view class="card head">
+    <image wx:if="{{group.coverImage}}" class="group-cover" src="{{group.coverImage}}" mode="aspectFill"></image>
     <view class="title">{{group.title}}</view>
     <view class="desc">分类：{{group.category}} · 团长：{{group.leaderName}}</view>
-    <view class="line">
-      <text class="chip">{{group.groupType === 'multi' ? '多人拼团' : '单人团'}}</text>
-      <text class="chip state">{{group.status === 'active' ? '进行中' : '已发车'}}</text>
-    </view>
   </view>
 
   <view class="card block">
-    <view class="k">销售规则</view>
-    <view class="v">规则：{{group.saleRuleType}}，满 ¥{{group.freeShippingThreshold}} 包邮，支持追加与合并发货。</view>
-    <view class="k">发车条件</view>
-    <view class="v">{{group.departureCondition}}</view>
-    <view wx:if="{{group.groupType === 'multi'}}" class="progress-wrap">
-      <view class="progress-track">
-        <view class="progress-fill" style="width: {{group.progressPercent || 0}}%;"></view>
+    <view class="k">详情</view>
+    <view class="v">规则：{{group.saleRuleType}}，发车条件：{{group.departureCondition || '待配置'}}</view>
+  </view>
+
+  <view class="card block">
+    <view class="k">商品选择</view>
+    <block wx:for="{{products}}" wx:key="id">
+      <view class="product-item">
+        <image class="cover" src="{{item.coverImage}}" mode="aspectFill"></image>
+        <view class="content">
+          <view class="name">{{item.name}}</view>
+          <view class="meta">¥{{item.price}} {{item.presaleDate ? ('预售 ' + item.presaleDate) : '现货'}}</view>
+        </view>
+        <qty-stepper productId="{{item.id}}" value="{{item.quantity}}" bind:change="onQtyChange" />
       </view>
-      <view class="progress-text">发车进度 {{group.progressPercent || 0}}%</view>
-    </view>
-  </view>
-
-  <view class="card block">
-    <view class="k">收款二维码</view>
-    <view class="qr">{{group.paymentQrHint}}</view>
+    </block>
   </view>
 
   <view class="actions">
-    <view class="ghost" bindtap="goCart">查看购物车</view>
-    <view class="solid" bindtap="goSelect">选购商品</view>
+    <button class="ghost share-btn" open-type="share">分享拼团</button>
+    <view class="solid" bindtap="goCart">查看购物车</view>
   </view>
 </view>

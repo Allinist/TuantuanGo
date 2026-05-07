@@ -1,0 +1,44 @@
+<view class="product-edit">
+  <view wx:if="{{showRoleTag}}" class="role-tag">{{product.bundleRole==='main' ? '主品' : (product.bundleRole==='bundle' ? '捆物' : '未标记')}}</view>
+  <view class="label">商品名称</view>
+  <input class="input-field" value="{{product.name}}" bindinput="onNameInput" />
+  <view class="line-two">
+    <view class="half">
+      <view class="label">价格</view>
+      <input class="input-field" type="number" value="{{product.price}}" bindinput="onPriceInput" />
+    </view>
+    <view class="half">
+      <view class="label">库存</view>
+      <input class="input-field" type="number" value="{{product.stock}}" bindinput="onStockInput" />
+    </view>
+  </view>
+
+  <picker wx:if="{{showPresale}}" class="presale-picker" mode="date" value="{{product.presaleDate}}" bindchange="onDateChange">
+    <view class="input presale-input">{{product.presaleDate || '单品预售日期'}}</view>
+  </picker>
+
+  <view wx:if="{{showPoolSelector}}" class="pool-row">
+    <block wx:for="{{poolOptions}}" wx:key="key">
+      <text class="pool-chip {{poolSelection.indexOf(item.key)>-1?'on':''}}" data-key="{{item.key}}" bindtap="onTogglePool">{{item.label}}</text>
+    </block>
+  </view>
+
+  <view class="upload upload-image" bindtap="chooseImage">添加商品图（最多4张，已选{{(product.images||[]).length}}张）</view>
+  <scroll-view wx:if="{{product.images && product.images.length}}" class="images-row" scroll-x="true" enable-flex="true" show-scrollbar="false">
+    <view class="images-inner">
+      <block wx:for="{{product.images}}" wx:key="*this">
+        <view class="thumb-wrap">
+          <image class="product-preview" src="{{item}}" mode="aspectFill"></image>
+          <view class="thumb-del" data-idx="{{index}}" bindtap="removeImage">×</view>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+
+  <view wx:if="{{showRule}}" class="rule-section">
+    <view class="rule-title">本商品拼团限制（留空不启用）</view>
+    <rule-triple-input value="{{product.ruleInput}}" bindchange="onRuleChange"></rule-triple-input>
+  </view>
+
+  <view wx:if="{{canRemove}}" class="remove-product" bindtap="removeProduct">{{removeText}}</view>
+</view>

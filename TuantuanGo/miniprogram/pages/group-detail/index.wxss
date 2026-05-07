@@ -1,20 +1,18 @@
 .page { padding: 24rpx; }
 .head, .block { padding: 24rpx; margin-bottom: 16rpx; }
+.group-cover { width: 100%; height: 240rpx; border-radius: 16rpx; margin-bottom: 12rpx; }
 .title { font-size: 34rpx; font-weight: 700; margin-bottom: 10rpx; }
 .desc { color: #8d716a; font-size: 24rpx; margin-bottom: 12rpx; }
-.line { display: flex; gap: 10rpx; }
-.chip { background: #ffe9e5; color: #8d716a; }
-.state { background: #e9fbf6; color: #00705d; }
 .k { margin-top: 8rpx; color: #8d716a; font-size: 24rpx; }
 .v { margin-top: 6rpx; font-size: 26rpx; color: #261815; }
-.progress-wrap { margin-top: 14rpx; }
-.progress-track {
-  width: 100%; height: 12rpx; border-radius: 999rpx; background: #f6ddd8; overflow: hidden;
-}
-.progress-fill { height: 12rpx; background: #ff6b4a; border-radius: 999rpx; }
-.progress-text { margin-top: 8rpx; font-size: 22rpx; color: #ae3115; font-weight: 600; }
-.qr { margin-top: 12rpx; background: #fff0ed; border-radius: 16rpx; text-align: center; padding: 48rpx; color: #8d716a; }
+.product-item { display: flex; align-items: center; gap: 16rpx; padding: 16rpx 0; border-bottom: 1rpx solid #f4e0dc; }
+.product-item:last-child { border-bottom: none; }
+.cover { width: 108rpx; height: 108rpx; border-radius: 14rpx; background: #f7f1ef; }
+.content { flex: 1; min-width: 0; }
+.name { font-size: 27rpx; color: #2f2523; font-weight: 600; }
+.meta { font-size: 22rpx; color: #8d716a; margin-top: 8rpx; }
 .actions { display: flex; gap: 16rpx; margin-top: 24rpx; }
 .ghost, .solid { flex: 1; text-align: center; padding: 22rpx; border-radius: 20rpx; font-size: 28rpx; font-weight: 700; }
 .ghost { border: 1rpx solid #e1bfb8; color: #59413c; background: #fff; }
 .solid { background: #ff6b4a; color: #fff; }
+.share-btn { line-height: 1.2; margin: 0; }

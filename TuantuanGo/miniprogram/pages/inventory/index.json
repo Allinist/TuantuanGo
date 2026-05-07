@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "库存管理",
+  "usingComponents": {
+    "search-bar": "/components/search-bar/index",
+    "product-editor-card": "/components/product-editor-card/index"
+  }
+}

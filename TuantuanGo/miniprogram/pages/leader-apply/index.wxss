@@ -2,6 +2,14 @@
 .box { padding: 28rpx; }
 .title { font-size: 34rpx; font-weight: 700; margin-bottom: 14rpx; }
 .desc { color: #59413c; font-size: 25rpx; line-height: 1.6; }
+.input, .area {
+  margin-top: 14rpx;
+  background: #fff0ed;
+  border-radius: 14rpx;
+  padding: 16rpx;
+  font-size: 26rpx;
+}
+.area { min-height: 140rpx; }
 .btn {
   margin-top: 24rpx; background: #ff6b4a; color: #fff; text-align: center;
   padding: 22rpx; border-radius: 18rpx; font-size: 28rpx; font-weight: 700;

@@ -1,5 +1,11 @@
 const { groups, productsByGroupId } = require("../../stores/mock-data");
+const { getGroupById, DEFAULT_GROUP_COVER } = require("../../stores/market-store");
 const { addItem, getCart, updateQuantity } = require("../../stores/cart-store");
+
+function getProductCover(product) {
+  const first = (product && product.images && product.images[0]) || "";
+  return first || DEFAULT_GROUP_COVER;
+}
 
 Page({
   data: {
@@ -12,9 +18,10 @@ Page({
     selectedBundleIds: []
   },
   onLoad(options) {
-    const groupId = options.groupId || "g1";
-    const group = groups.find((x) => x.id === groupId) || groups[0];
-    const products = productsByGroupId[group.id] || [];
+    const groupId = (options && options.groupId) || "g1";
+    const group = getGroupById(groupId) || groups.find((x) => x.id === groupId) || groups[0];
+    const fromPublished = Array.isArray(group.products) && group.products.length ? group.products : null;
+    const products = (fromPublished || productsByGroupId[group.id] || []).map((p) => ({ ...p, coverImage: getProductCover(p) }));
     const mainProduct = products.find((x) => x.mode === "bundle_main") || null;
     const bundleProducts = products.filter((x) => x.mode === "bundle_item");
     const fixedBundleProducts = products.filter((x) => x.mode === "bundle_fixed");
@@ -83,8 +90,8 @@ Page({
     const { group, mainProduct, bundleProducts, selectedBundleIds } = this.data;
     if (!group || !mainProduct) return;
     const picked = bundleProducts.filter((x) => selectedBundleIds.includes(x.id));
-    const pickedAmount = picked.reduce((sum, x) => sum + x.price, 0);
-    if (pickedAmount < (group.bundleRequiredAmount || 0)) {
+    const pickedAmount = picked.reduce((sum, x) => sum + Number(x.price || 0), 0);
+    if (pickedAmount < Number(group.bundleRequiredAmount || 0)) {
       wx.showToast({ title: `被捆金额需≥¥${group.bundleRequiredAmount}`, icon: "none" });
       return;
     }

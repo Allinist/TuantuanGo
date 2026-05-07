@@ -1,0 +1,5 @@
+<view class="search card">
+  <input class="search-input" placeholder="{{placeholder}}" value="{{value}}" bindinput="onInput" bindconfirm="onSearch" confirm-type="search" />
+  <text class="search-btn" bindtap="onSearch">搜索</text>
+  <text wx:if="{{value}}" class="clear" bindtap="onClear">清除</text>
+</view>

@@ -2,6 +2,7 @@ const { groups } = require("../../stores/mock-data");
 const { getCart, clearGroupCart } = require("../../stores/cart-store");
 const { calcOrderAmount } = require("../../services/pricing");
 const { createOrder } = require("../../stores/order-store");
+const { getAddresses } = require("../../stores/address-store");
 
 Page({
   data: {
@@ -10,7 +11,10 @@ Page({
     group: null,
     amount: null,
     remark: "",
-    proofName: ""
+    proofName: "",
+    addresses: [],
+    selectedAddressId: "",
+    selectedAddressText: "请选择收货地址"
   },
   onLoad(query) {
     this.setData({ groupId: query && query.groupId ? query.groupId : "" });
@@ -27,11 +31,35 @@ Page({
           tipFee: group.tipFee
         })
       : null;
-    this.setData({ cart, group, amount });
+    const addresses = getAddresses();
+    let selectedAddressId = this.data.selectedAddressId;
+    if (!selectedAddressId && addresses.length) selectedAddressId = addresses[0].id;
+    const selected = addresses.find((x) => x.id === selectedAddressId);
+    this.setData({
+      cart,
+      group,
+      amount,
+      addresses,
+      selectedAddressId,
+      selectedAddressText: selected ? `${selected.name} ${selected.phone} ${selected.address}` : "请选择收货地址"
+    });
   },
-  onRemarkInput(e) {
-    this.setData({ remark: e.detail.value });
+  chooseAddress() {
+    const list = this.data.addresses || [];
+    if (!list.length) return wx.showToast({ title: "请先在设置中添加地址", icon: "none" });
+    wx.showActionSheet({
+      itemList: list.map((x) => `${x.name} ${x.phone}`),
+      success: (res) => {
+        const selected = list[res.tapIndex];
+        if (!selected) return;
+        this.setData({
+          selectedAddressId: selected.id,
+          selectedAddressText: `${selected.name} ${selected.phone} ${selected.address}`
+        });
+      }
+    });
   },
+  onRemarkInput(e) { this.setData({ remark: e.detail.value }); },
   chooseProof() {
     wx.chooseImage({
       count: 1,
@@ -44,36 +72,21 @@ Page({
     });
   },
   submitOrder() {
-    if (!this.data.cart.items.length) {
-      wx.showToast({ title: "购物车为空", icon: "none" });
-      return;
-    }
-    if (!this.data.proofName) {
-      wx.showToast({ title: "请先上传支付截图", icon: "none" });
-      return;
-    }
+    if (!this.data.cart.items.length) return wx.showToast({ title: "购物车为空", icon: "none" });
+    if (!this.data.proofName) return wx.showToast({ title: "请先上传支付截图", icon: "none" });
+    if (!this.data.selectedAddressId) return wx.showToast({ title: "请选择收货地址", icon: "none" });
+    const selected = this.data.addresses.find((x) => x.id === this.data.selectedAddressId) || null;
     createOrder({
       groupTitle: this.data.group ? this.data.group.title : "",
       leaderName: this.data.group ? this.data.group.leaderName : "",
       items: this.data.cart.items,
       amount: this.data.amount,
       remark: this.data.remark,
+      address: selected,
       logisticsCompany: "顺丰速运",
       trackingNo: `SF${String(Date.now()).slice(-10)}`,
       shipmentStatus: "pending",
-      paymentReviewStatus: "pending_review",
-      trackingEvents: [
-        { time: "待发货", text: "团长审核通过后将更新物流轨迹", eventAt: Date.now() }
-      ],
-      mergeShipment: {
-        status: "not_applied",
-        relatedOrderNos: []
-      },
-      transferRecord: {
-        status: "none",
-        fromUser: "团团用户_1024",
-        toUser: ""
-      }
+      paymentReviewStatus: "pending_review"
     });
     clearGroupCart(this.data.groupId || this.data.cart.groupId);
     wx.showModal({

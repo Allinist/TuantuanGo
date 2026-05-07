@@ -1,1 +1,7 @@
-{ "navigationBarTitleText": "发布团购" }
+{
+  "navigationBarTitleText": "发布团购",
+  "usingComponents": {
+    "rule-triple-input": "/components/rule-triple-input/index",
+    "product-editor-card": "/components/product-editor-card/index"
+  }
+}

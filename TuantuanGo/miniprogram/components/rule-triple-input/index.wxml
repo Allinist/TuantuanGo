@@ -1,0 +1,17 @@
+<view class="triple-row">
+  <view class="cell">
+    <text class="prefix">满</text>
+    <input class="ipt" type="number" placeholder="件" value="{{value.qty}}" data-key="qty" bindinput="onInput" />
+    <text class="suffix">件</text>
+  </view>
+  <view class="cell">
+    <text class="prefix">满</text>
+    <input class="ipt" type="number" placeholder="金额" value="{{value.amount}}" data-key="amount" bindinput="onInput" />
+    <text class="suffix">元</text>
+  </view>
+  <view class="cell">
+    <text class="prefix">满</text>
+    <input class="ipt" type="number" placeholder="人" value="{{value.people}}" data-key="people" bindinput="onInput" />
+    <text class="suffix">人</text>
+  </view>
+</view>

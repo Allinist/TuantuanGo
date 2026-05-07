@@ -1,1 +1,6 @@
-{ "navigationBarTitleText": "团详情" }
+{
+  "navigationBarTitleText": "详情",
+  "usingComponents": {
+    "qty-stepper": "/components/qty-stepper/index"
+  }
+}
